@@ -1,0 +1,405 @@
+/* ---------------------------------------------------------------
+   EDIT: palette.
+
+   Current: "petrol" — cool neutral ground, deep teal accent.
+   Every pair below was verified against WCAG AA (4.5:1) in both
+   themes. --on-accent is the text drawn ON TOP of --accent
+   (buttons, avatar, the Current pill); if you change --accent you
+   must re-check it, since a light accent needs dark text on it.
+
+   Three alternates, all AA-verified. To switch, paste the light
+   block over :root and the dark block over the dark media query.
+
+   GRAPHITE — near-monochrome, maximum restraint
+     light  bg #fbfbfb  surface #ffffff  ink #101112  muted #5b5d60
+            accent #26292c  on-accent #ffffff  line #d2d4d5
+     dark   bg #0f1011  surface #171819  ink #efeff0  muted #9a9c9f
+            accent #d6d8da  on-accent #0f1011  line #303334
+
+   FOREST — deep green, stability without the finance cliche
+     light  bg #fbfbf9  surface #ffffff  ink #141814  muted #565d57
+            accent #1b5e3a  on-accent #ffffff  line #d3d8d2
+     dark   bg #0e1210  surface #161b18  ink #edefec  muted #98a29b
+            accent #5fc08a  on-accent #0e1210  line #2d3830
+
+   INDIGO — restrained violet, intellectual
+     light  bg #fcfbfd  surface #ffffff  ink #17161c  muted #5a5766
+            accent #4b3f9e  on-accent #ffffff  line #d6d3de
+     dark   bg #111017  surface #1a1822  ink #eeecf2  muted #9c98ab
+            accent #a99bf5  on-accent #111017  line #343040
+   --------------------------------------------------------------- */
+:root {
+  --bg:        #fbfbfa;
+  --surface:   #ffffff;
+  --ink:       #15191a;
+  --muted:     #565e60;
+  --accent:    #0f6069;   /* deep petrol */
+  --on-accent: #ffffff;
+  --line:      #d2d7d6;
+  --shadow:    0 1px 2px rgba(21,25,26,.05), 0 8px 24px -12px rgba(21,25,26,.16);
+
+  --max: 72rem;
+  --pad: clamp(1.25rem, 5vw, 3rem);
+  --gap: clamp(3.5rem, 9vw, 7rem);
+
+  --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:      #0e1213;
+    --surface: #161b1c;
+    --ink:     #edefee;
+    --muted:   #98a3a4;
+    --accent:  #4fbdc7;   /* petrol lifted for dark ground */
+    /* the dark accent is light, so text on it must be dark to stay AA */
+    --on-accent: #0e1213;
+    --line:    #2e383a;
+    --shadow:  0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.7);
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: clamp(1rem, .96rem + .2vw, 1.075rem);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-wrap: break-word;
+}
+
+h1, h2, h3 { line-height: 1.15; margin: 0; text-wrap: balance; letter-spacing: -.02em; }
+p { margin: 0; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+a { color: inherit; }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
+
+.skip {
+  position: absolute; left: -9999px;
+  background: var(--accent); color: var(--on-accent);
+  padding: .7rem 1.1rem; border-radius: 0 0 .5rem 0; font-weight: 600;
+}
+.skip:focus { left: 0; top: 0; z-index: 99; }
+
+.wrap { width: 100%; max-width: var(--max); margin-inline: auto; padding-inline: var(--pad); }
+section { padding-block: var(--gap); }
+
+.eyebrow {
+  font-size: .75rem; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 1rem;
+}
+h2 { font-size: clamp(1.6rem, 1.2rem + 1.7vw, 2.35rem); margin-bottom: .85rem; }
+.sub { color: var(--muted); max-width: 58ch; margin-bottom: 2.75rem; }
+
+/* ---------------- hero ---------------- */
+/* Hero bottom stays slim: the first section brings its own full --gap of
+   top padding, and since the stats strip was removed there is no band in
+   between to absorb a doubled gap. */
+.hero { padding-block: clamp(3rem, 9vw, 6rem) clamp(1rem, 2.5vw, 2rem); }
+.hero-grid { display: grid; gap: 1.75rem; grid-template-columns: 1fr; align-items: center; }
+/* Mobile stacks the hero, so the portrait leads: it reads as a profile header
+   rather than being stranded below the CTA. Desktop puts it back on the right. */
+.hero-grid > .avatar { order: -1; }
+@media (min-width: 46rem) {
+  .hero-grid { grid-template-columns: 1fr auto; gap: clamp(2rem, 5vw, 3.5rem); }
+  .hero-grid > .avatar { order: 0; }
+}
+
+.kicker {
+  font-size: .8rem; font-weight: 700; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 1.1rem;
+}
+
+.hero h1 {
+  font-size: clamp(1.9rem, 1.15rem + 3.4vw, 3.3rem);
+  margin-bottom: 1.25rem; max-width: 19ch;
+}
+
+.hero .role {
+  font-size: clamp(.95rem, .9rem + .3vw, 1.1rem);
+  font-weight: 600; color: var(--accent); margin-bottom: 1.5rem;
+  letter-spacing: .01em;
+}
+
+.hero .lead {
+  font-size: clamp(1.05rem, .98rem + .45vw, 1.25rem);
+  color: var(--muted); max-width: 46ch; margin-bottom: 2rem;
+}
+
+.meta { display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; font-size: .9rem; color: var(--muted); margin-bottom: 2.25rem; }
+.meta span { display: inline-flex; align-items: center; gap: .45rem; }
+.meta svg { width: 1em; height: 1em; flex: none; opacity: .7; }
+
+.avatar {
+  position: relative;
+  width: 6.5rem; aspect-ratio: 1; border-radius: 50%;
+  background: var(--accent); color: var(--on-accent);
+  display: grid; place-items: center;
+  font-size: 2.1rem; font-weight: 700; letter-spacing: -.04em;
+  box-shadow: var(--shadow); overflow: hidden; user-select: none;
+}
+@media (min-width: 46rem) {
+  .avatar { width: clamp(8rem, 22vw, 11.5rem); font-size: clamp(2.6rem, 8vw, 3.75rem); }
+}
+/* The photo covers the monogram once it loads. If assets/portrait.jpg is
+   missing the <img> removes itself and the SA monogram shows through, so
+   the page never renders a broken-image icon. */
+.avatar img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+  .btn:hover { transform: none; }
+}
+
+/* full-width hairline marking the hero handoff into the first section */
+.ruled { border-top: 1px solid var(--line); }
+
+/* ---------------- cards ---------------- */
+.cards { display: grid; gap: 1.5rem; grid-template-columns: 1fr; }
+/* 58rem, not 46rem: three across on a portrait tablet leaves ~210px per card. */
+@media (min-width: 58rem) { .cards { grid-template-columns: repeat(3, 1fr); } }
+
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 1rem; padding: clamp(1.5rem, 3vw, 2rem); box-shadow: var(--shadow); }
+.card h3 { font-size: 1.15rem; margin-bottom: .5rem; }
+.card .who { font-size: .8rem; font-weight: 600; color: var(--accent); margin-bottom: .9rem; }
+.card ul { display: grid; gap: .6rem; font-size: .93rem; color: var(--muted); }
+.card li { padding-left: 1.1rem; position: relative; }
+.card li::before { content: ""; position: absolute; left: 0; top: .62em; width: .35rem; height: .35rem; border-radius: 50%; background: var(--accent); }
+
+/* ---------------- engagements ---------------- */
+.engage { display: grid; gap: 1.25rem; grid-template-columns: 1fr; counter-reset: eng; }
+
+.eng {
+  border: 2px solid var(--accent); border-radius: 1rem;
+  padding: clamp(1.5rem, 3vw, 1.9rem); background: var(--surface);
+  box-shadow: var(--shadow); counter-increment: eng;
+  /* column layout so the terms list bottom-aligns across all three cards */
+  display: flex; flex-direction: column;
+}
+.eng::before {
+  content: counter(eng, decimal-leading-zero);
+  display: block; font-family: var(--mono); font-size: .8rem;
+  color: var(--accent); font-weight: 700; margin-bottom: .8rem;
+}
+.eng h3 { font-size: 1.08rem; margin-bottom: .55rem; }
+.eng p { font-size: .93rem; color: var(--muted); }
+
+/* ---------------- domains ---------------- */
+.domains { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 1rem; overflow: hidden; }
+.dom { background: var(--bg); padding: clamp(1.25rem, 3vw, 1.75rem); display: grid; gap: .4rem; }
+@media (min-width: 46rem) {
+  .dom { grid-template-columns: auto 1fr auto; align-items: baseline; gap: .4rem 1.5rem; }
+}
+.dom .rank { font-family: var(--mono); font-size: .8rem; color: var(--accent); font-weight: 700; }
+.dom h3 { font-size: 1.05rem; }
+.dom p { font-size: .9rem; color: var(--muted); grid-column: 1 / -1; }
+@media (min-width: 46rem) { .dom p { grid-column: 2 / 3; } }
+.dom .mods { font-family: var(--mono); font-size: .78rem; color: var(--muted); white-space: nowrap; }
+
+/* ---------------- vantage points ---------------- */
+.vantage { display: grid; gap: 1.25rem; grid-template-columns: 1fr; }
+@media (min-width: 52rem) { .vantage { grid-template-columns: repeat(2, 1fr); } }
+
+.vp {
+  border: 1px solid var(--line); border-radius: 1rem; background: var(--surface);
+  padding: clamp(1.5rem, 3vw, 2rem); box-shadow: var(--shadow);
+  display: grid; align-content: start; gap: .45rem;
+}
+.vp .when { font-family: var(--mono); font-size: .78rem; font-weight: 700; color: var(--accent); }
+.vp h3 { font-size: 1.15rem; }
+.vp .who { font-family: var(--mono); font-size: .8rem; color: var(--muted); }
+.vp .cats { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .3rem; }
+.vp .cats li {
+  /* .78rem = 12.5px. Anything under 12px is hard to read on a phone. */
+  font-size: .78rem; font-weight: 600; letter-spacing: .02em;
+  border: 1px solid var(--line); border-radius: 999px;
+  padding: .2rem .65rem; color: var(--muted);
+}
+.vp .txt { font-size: .93rem; color: var(--muted); margin-top: .5rem; }
+.vp .now-tag {
+  justify-self: start; font-size: .75rem; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; background: var(--accent); color: var(--on-accent);
+  padding: .15rem .5rem; border-radius: 999px; margin-top: .5rem;
+}
+
+/* ---------------- industries ---------------- */
+.inds { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 1rem; overflow: hidden; }
+.ind { background: var(--bg); padding: clamp(1.15rem, 2.5vw, 1.6rem); display: grid; gap: .3rem; }
+@media (min-width: 46rem) { .ind { grid-template-columns: 13rem 1fr; gap: 1.5rem; align-items: baseline; } }
+.ind dt { font-weight: 600; }
+.ind dd { margin: 0; font-size: .93rem; color: var(--muted); }
+
+/* ---------------- contact ---------------- */
+.contact { border-top: 1px solid var(--line); background: var(--surface); text-align: center; }
+.contact p { color: var(--muted); max-width: 48ch; margin: 0 auto 2rem; }
+footer { border-top: 1px solid var(--line); padding-block: 1.25rem; font-size: .85rem; color: var(--muted); }
+footer .wrap { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; justify-content: space-between; }
+
+/* ---------------- cross-page navigation ---------------- */
+.pagenav { border-block: 1px solid var(--line); background: var(--surface); }
+.pagenav .wrap { padding-block: clamp(2rem, 5vw, 2.75rem); }
+.pagenav a {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: .35rem .9rem;
+  text-decoration: none; color: inherit;
+}
+.pagenav .lbl {
+  font-size: .75rem; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--accent);
+}
+.pagenav .ttl { font-size: clamp(1.15rem, 1rem + .7vw, 1.5rem); font-weight: 700; letter-spacing: -.02em; }
+.pagenav .sub2 { font-size: .92rem; color: var(--muted); flex-basis: 100%; margin-top: .2rem; }
+.pagenav a:hover .ttl { color: var(--accent); }
+
+/* padding, not just line-height: this has to clear a 44px touch target */
+.backlink {
+  display: inline-flex; align-items: center; gap: .45rem;
+  font-size: .85rem; font-weight: 600; color: var(--muted);
+  text-decoration: none; padding: .7rem 0; margin-bottom: 1.05rem;
+}
+.backlink:hover { color: var(--accent); }
+
+.pagehead { padding-block: clamp(2.5rem, 7vw, 4.5rem) 0; }
+.pagehead h1 { font-size: clamp(1.9rem, 1.3rem + 2.6vw, 3rem); margin-bottom: 1rem; max-width: 22ch; }
+.pagehead .lead { font-size: clamp(1.02rem, .96rem + .35vw, 1.18rem); color: var(--muted); max-width: 58ch; }
+
+footer .wrap a {
+  color: var(--muted); text-decoration: none;
+  display: inline-block; padding: .875rem 0;   /* 44px touch target */
+}
+footer .wrap a:hover { color: var(--accent); }
+
+.cta-note { font-size: .85rem; color: var(--muted); margin-top: .85rem; }
+.contact .cta-note { text-align: center; }
+
+
+
+/* ---------------- case study ---------------- */
+.casewrap { border-block: 1px solid var(--line); background: var(--surface); }
+
+.case { display: grid; gap: clamp(1.75rem, 4vw, 2.75rem); grid-template-columns: 1fr; }
+@media (min-width: 52rem) { .case { grid-template-columns: 1.35fr 1fr; align-items: start; } }
+
+.case-body { display: grid; gap: 1rem; color: var(--muted); }
+.case-body p { font-size: clamp(.97rem, .94rem + .2vw, 1.05rem); }
+
+.case-facts {
+  display: grid; gap: 1px; margin: 0;
+  background: var(--line); border: 1px solid var(--line); border-radius: 1rem; overflow: hidden;
+}
+.case-facts > div { background: var(--bg); padding: .8rem 1.1rem; display: grid; gap: .1rem; }
+@media (min-width: 30rem) {
+  .case-facts > div { grid-template-columns: 6.5rem 1fr; gap: 1rem; align-items: baseline; }
+}
+.case-facts dt {
+  /* .75rem = 12px, the floor for readable label text on a phone */
+  font-family: var(--mono); font-size: .75rem; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--accent);
+}
+.case-facts dd { margin: 0; font-size: .9rem; }
+
+.case-out {
+  display: grid; gap: .85rem; margin-top: clamp(1.75rem, 4vw, 2.5rem);
+  padding-top: clamp(1.5rem, 3vw, 2rem); border-top: 1px solid var(--line);
+}
+@media (min-width: 52rem) { .case-out { grid-template-columns: repeat(3, 1fr); gap: 1.75rem; } }
+.case-out li { font-size: .93rem; color: var(--muted); padding-left: 1.1rem; position: relative; }
+.case-out li::before {
+  content: ""; position: absolute; left: 0; top: .62em;
+  width: .35rem; height: .35rem; border-radius: 50%; background: var(--accent);
+}
+.case-out strong { color: var(--accent); font-weight: 700; }
+
+/* ---------------- priced entry offer ---------------- */
+.eng-price {
+  font-family: var(--mono); font-size: 1.15rem; font-weight: 700;
+  color: var(--accent); margin: -.2rem 0 .75rem; line-height: 1.3;
+}
+.eng-price span {
+  display: block; font-family: var(--font); font-size: .82rem;
+  font-weight: 600; color: var(--muted); letter-spacing: 0; margin-top: .15rem;
+}
+.eng-terms {
+  /* auto top margin pushes the list to the card floor, so the three
+     terms blocks align even though the body copy differs in length */
+  display: grid; gap: .5rem; margin-top: auto; padding-top: 1.25rem;
+  border-top: 1px solid var(--line); font-size: .85rem; color: var(--muted);
+}
+.eng > p:last-of-type { margin-bottom: 1.25rem; }
+.eng-terms li { padding-left: 1.05rem; position: relative; }
+.eng-terms li::before {
+  content: ""; position: absolute; left: 0; top: .6em;
+  width: .3rem; height: .3rem; border-radius: 50%; background: var(--accent);
+}
+
+/* references disclosure under the case study */
+.case-note {
+  margin-top: 1.75rem; font-size: .88rem; color: var(--muted);
+  padding-left: 1rem; border-left: 2px solid var(--accent);
+}
+
+
+/* Desktop: each offer becomes a full-width band (title and price left, body
+   and terms right). Three 850px towers at 34 characters a line read as a
+   wall; bands give the copy a ~64ch measure and put the price where the
+   eye starts. Mobile keeps the stacked card. */
+@media (min-width: 58rem) {
+  .engage { gap: 1.5rem; }
+  .eng {
+    display: grid;
+    grid-template-columns: 15rem 1fr;
+    grid-template-rows: auto auto auto;
+    column-gap: clamp(2.5rem, 5vw, 4rem);
+    align-items: start;
+  }
+  .eng::before { grid-column: 1; grid-row: 1; }
+  .eng-head    { grid-column: 1; grid-row: 2; }
+  .eng > p:not(.eng-price) { grid-column: 2; grid-row: 1 / span 2; max-width: 64ch; }
+  .eng-terms   { grid-column: 2; grid-row: 3; margin-top: 1.5rem; max-width: 64ch; }
+}
+
+/* ---------------- enterprise reach strip ---------------- */
+.reach {
+  margin-top: 1.25rem; font-size: .88rem; color: var(--muted); line-height: 1.9;
+}
+.reach strong {
+  color: var(--ink); font-size: .78rem; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase; margin-right: .5rem;
+}
+
+/* ---------------- contact link ----------------
+   A real <a> with a mailto href, styled as a solid pill: it reads as the
+   page's primary action, but it is still a plain hyperlink, so right-click
+   copy-address and open-in-new-tab behave as a visitor expects. The address
+   is assembled by JS into the href, so markup-only scrapers get nothing;
+   the visible label stays "Contact me". */
+.cta-line { margin-bottom: .5rem; }
+.contact .cta-line { text-align: center; }
+
+.maillink {
+  display: inline-flex; align-items: center; gap: .55rem;
+  background: var(--accent); color: var(--on-accent);
+  padding: .95rem 1.75rem; border-radius: 999px;
+  font-size: clamp(1rem, .96rem + .3vw, 1.1rem); font-weight: 600;
+  text-decoration: none; box-shadow: var(--shadow);
+  transition: transform .15s ease, filter .15s ease;
+}
+.maillink::before {
+  content: "@"; font-size: 1.25em; font-weight: 700; line-height: 1;
+  transform: translateY(-.03em);
+}
+.maillink:hover { filter: brightness(1.08); transform: translateY(-1px); }
+@media (prefers-reduced-motion: reduce) { .maillink:hover { transform: none; } }
+
+.nojs-mail { font-size: .95rem; color: var(--muted); }
+

@@ -1,0 +1,280 @@
+/* ==================================================================
+   AS-BUILT — DWG. NO. SA-001 (REV B)
+   Drafting-room redesign variant. Same content as ../index.html,
+   different UI system: graphite ink on warm vellum, checker's-carmine
+   accent, grid-paper hero, connector spine, CAD title-block footer.
+   Palette verified numerically: every text pair clears WCAG AA in
+   both themes (minimum 5.94:1). Decorative-only elements (ghost
+   indices, grid lines, schematic) are aria-hidden and duplicated by
+   accessible text.
+   ================================================================== */
+:root {
+  --bg:        #FAF7F0;
+  --surface:   #FFFFFF;
+  --ink:       #21252B;
+  --muted:     #59606A;
+  --accent:    #A03A2E;   /* checker's carmine: the approval pen */
+  --on-accent: #FFFFFF;
+  --line:      #DAD5C9;
+  --grid-fine:  rgba(33,37,43,0.06);
+  --grid-major: rgba(33,37,43,0.13);
+
+  --max: 72rem;
+  --pad: clamp(1.25rem, 5vw, 3rem);
+  --gap: clamp(3.5rem, 8vw, 5rem);
+
+  --font: system-ui, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --display: "Helvetica Neue", Helvetica, "Arial Nova", Arial, system-ui, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, "Cascadia Mono", "DejaVu Sans Mono", monospace;
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:        #14171C;
+    --surface:   #1B2027;
+    --ink:       #E9E7E2;
+    --muted:     #A6ACB6;
+    --accent:    #F08C86;
+    --on-accent: #241110;
+    --line:      #333A44;
+    --grid-fine:  rgba(233,231,226,0.05);
+    --grid-major: rgba(233,231,226,0.10);
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  /* clip, not hidden: kills a 1px phantom scroll from the card corner
+     brackets without creating a scroll container */
+  overflow-x: clip;
+  font-family: var(--font); font-size: 1.0625rem; line-height: 1.65;
+  -webkit-font-smoothing: antialiased; overflow-wrap: break-word;
+}
+h1, h2, h3 { font-family: var(--display); font-weight: 700; line-height: 1.15; margin: 0; letter-spacing: -.02em; text-wrap: balance; }
+p { margin: 0; }
+ul, ol, dl, dd { margin: 0; padding: 0; list-style: none; }
+a { color: inherit; }
+::selection { background: var(--accent); color: var(--on-accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+.num, .price, .pval, .out-val { font-variant-numeric: tabular-nums; }
+
+.skip { position: absolute; left: -9999px; background: var(--accent); color: var(--on-accent); padding: .7rem 1.1rem; font-weight: 600; }
+.skip:focus { left: 0; top: 0; z-index: 99; }
+
+.wrap { width: 100%; max-width: var(--max); margin-inline: auto; padding-inline: var(--pad); }
+
+/* mono "instrument" register: never below 12px */
+.kicker-line, .meta-tokens, .cta-note, .cidx, .plabel, .pkey, .pval,
+.out-cap, .xref-kick, .tcell b, .nav a, .wordmark, .price, .nojs-mail
+  { font-family: var(--mono); }
+
+/* ---------------- hero: grid paper ---------------- */
+.hero {
+  position: relative;
+  background-image:
+    linear-gradient(var(--grid-fine) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-fine) 1px, transparent 1px),
+    linear-gradient(var(--grid-major) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-major) 1px, transparent 1px);
+  background-size: 8px 8px, 8px 8px, 96px 96px, 96px 96px;
+}
+.hero::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 120px;
+  background: linear-gradient(transparent, var(--bg)); pointer-events: none;
+}
+
+.topbar {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding-block: .9rem; border-bottom: 2px solid var(--line); position: relative;
+}
+.wordmark { font-size: .8125rem; letter-spacing: .1em; font-weight: 700; }
+.nav { display: flex; align-items: center; gap: 1.25rem; }
+.nav a {
+  font-size: .8125rem; letter-spacing: .04em;
+  color: var(--muted); text-decoration: none; padding: 1rem 0;  /* 44px target */
+}
+.nav a:hover { color: var(--ink); box-shadow: 0 2px 0 0 var(--accent); }
+.stamp {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 2px solid var(--accent); box-shadow: inset 0 0 0 3px var(--bg), inset 0 0 0 4px var(--accent);
+  display: grid; place-items: center;
+  font-family: var(--mono); font-size: .75rem; font-weight: 700; color: var(--accent);
+  user-select: none;
+}
+
+.hero-grid { display: grid; gap: 24px; grid-template-columns: 1fr; padding-block: clamp(2.5rem, 6vw, 4.5rem) clamp(3rem, 7vw, 5rem); position: relative; }
+
+.kicker-line { display: flex; align-items: center; gap: 10px; font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.1rem; }
+.kicker-line::before { content: ""; width: 24px; height: 2px; background: var(--accent); flex: none; }
+
+.hero h1 { font-size: clamp(2.1rem, 5.5vw, 4rem); line-height: 1.08; max-width: 19ch; margin-bottom: .9rem; }
+.hl {
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-repeat: no-repeat; background-position: 0 100%; background-size: 100% 2px;
+  padding-bottom: 4px;
+  -webkit-box-decoration-break: clone; box-decoration-break: clone;
+}
+.lead { color: var(--muted); max-width: 58ch; margin-bottom: 1.4rem; }
+.meta-tokens { font-size: .8125rem; letter-spacing: .03em; color: var(--muted); display: flex; flex-wrap: wrap; gap: .4rem 1rem; margin-bottom: 1.6rem; }
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
+.btn-p {
+  position: relative; display: inline-block;
+  background: var(--accent); color: var(--on-accent);
+  font-family: var(--mono); font-size: .8125rem; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase; text-decoration: none;
+  padding: 14px 28px; border-radius: 2px;
+}
+.btn-p::before, .btn-p::after { content: ""; position: absolute; width: 10px; height: 10px; }
+.btn-p::before { top: -5px; left: -5px; border-top: 1.5px solid var(--ink); border-left: 1.5px solid var(--ink); }
+.btn-p::after  { bottom: -5px; right: -5px; border-bottom: 1.5px solid var(--ink); border-right: 1.5px solid var(--ink); }
+.btn-g {
+  display: inline-block; border: 1px solid var(--line); border-radius: 2px;
+  font-family: var(--mono); font-size: .8125rem; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--ink); text-decoration: none; padding: 14px 22px;
+}
+.btn-g:hover { border-color: var(--accent); }
+.cta-note { font-size: .75rem; color: var(--muted); margin-top: .8rem; }
+.nojs-mail { font-size: .8125rem; color: var(--muted); }
+
+
+/* ---------------- portrait: drawing-frame placeholder ---------------- */
+.hero-grid { justify-items: start; }
+.portrait { margin: 0; justify-self: center; }
+@media (min-width: 900px) {
+  .hero-grid { grid-template-columns: 7fr 5fr; align-items: center; }
+}
+.pframe {
+  position: relative; width: clamp(150px, 30vw, 260px); aspect-ratio: 4 / 5;
+  background: var(--surface);
+  border: 1px solid var(--line); outline: 1px solid var(--line); outline-offset: 5px;
+  display: grid; place-items: center; overflow: hidden;
+}
+.pmono {
+  font-family: var(--mono); font-weight: 700; color: var(--line);
+  font-size: clamp(3rem, 8vw, 4.5rem); letter-spacing: -.04em; user-select: none;
+}
+.pframe img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.portrait figcaption {
+  font-family: var(--mono); font-size: .75rem; letter-spacing: .05em;
+  color: var(--muted); text-align: center; margin-top: .8rem;
+}
+
+/* ---------------- connector spine ---------------- */
+main { position: relative; }
+@media (min-width: 900px) {
+  /* The spine is positioned into the wrap's own left gutter rather than by
+     padding <main>. Padding main shifts its centred .wrap by HALF the value
+     (auto margins redistribute), which knocked body content 28px out of line
+     with the hero. This keeps every column on one axis. */
+  main::before {
+    content: ""; position: absolute; top: 0; bottom: 0; width: 2px;
+    left: calc(max(0px, (100% - var(--max)) / 2) + 1.5rem);
+    background: var(--line);
+  }
+}
+.sec { padding-block: var(--gap); }
+
+/* ---------------- drawing-zone section headers ---------------- */
+.sechead { display: flex; align-items: flex-end; gap: 16px; margin-bottom: 2rem; }
+.shcol { min-width: 0; }
+.cidx { display: block; font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: .5rem; }
+.shcol h2 { font-size: clamp(1.4rem, 3vw, 2rem); }
+.rule { flex: 1; border-bottom: 1px dotted var(--line); margin: 0 0 .5em 16px; position: relative; min-width: 40px; }
+.sub { color: var(--muted); max-width: 58ch; margin-bottom: 2.25rem; }
+
+/* ---------------- cards with registration brackets ---------------- */
+.rgrid { display: grid; gap: 24px; grid-template-columns: 1fr; }
+@media (min-width: 900px) { .rgrid { grid-template-columns: repeat(3, 1fr); } }
+.rcard {
+  position: relative; background: var(--surface);
+  border: 1px solid var(--line); border-radius: 2px; padding: 24px;
+  display: flex; flex-direction: column;
+}
+.rcard ul { margin-top: auto; padding-top: .9rem; }
+.plabel { display: block; font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: .6rem; }
+.rcard h3 { font-size: clamp(1.15rem, 1.05rem + .5vw, 1.25rem); margin-bottom: .35rem; }
+.rcard .who { font-size: .9375rem; color: var(--accent); font-weight: 600; margin-bottom: .8rem; }
+.rcard ul { display: grid; gap: .55rem; font-size: .9375rem; line-height: 1.6; color: var(--muted); }
+.rcard li { padding-left: 1.2rem; position: relative; }
+.rcard li::before { content: "\25B8"; position: absolute; left: 0; top: 0; color: var(--accent); font-family: var(--mono); }
+
+.reach { margin-top: 1.75rem; font-size: .9375rem; color: var(--muted); line-height: 1.9; max-width: 72ch; }
+.reach b { font-family: var(--mono); font-weight: 700; font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink); margin-right: .5rem; }
+
+/* ---------------- case study: double drawing frame ---------------- */
+.frame {
+  background: var(--surface); border: 1px solid var(--line);
+  outline: 1px solid var(--line); outline-offset: 5px;
+  border-radius: 2px; padding: clamp(24px, 4vw, 48px); margin-top: 6px;
+}
+.frame-grid { display: grid; gap: 32px; grid-template-columns: 1fr; }
+@media (min-width: 900px) { .frame-grid { grid-template-columns: minmax(0,1fr) 18rem; } }
+.narr { display: grid; gap: 1rem; color: var(--muted); }
+.narr p { max-width: 68ch; }
+.params { border-top: 2px solid var(--accent); padding-top: 14px; align-self: start; }
+.params .plabel { margin-bottom: 1rem; color: var(--ink); }
+.prow { display: flex; align-items: baseline; margin-bottom: .65rem; }
+.pkey { font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); flex: none; }
+.pl { flex: 1; border-bottom: 1px dotted var(--line); margin: 0 8px 4px; min-width: 24px; }
+.pval { font-size: .875rem; color: var(--ink); text-align: right; }
+.outs { display: grid; gap: 28px; grid-template-columns: 1fr; margin-top: clamp(1.75rem, 4vw, 2.5rem); padding-top: clamp(1.25rem, 3vw, 2rem); border-top: 1px solid var(--line); }
+@media (min-width: 900px) { .outs { grid-template-columns: repeat(3, 1fr); } }
+.out-val { font-family: var(--mono); font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 700; color: var(--ink); line-height: 1.15; }
+.out-cap { display: block; font-size: .8125rem; letter-spacing: .02em; color: var(--muted); margin-top: .45rem; max-width: 38ch; }
+.case-note { margin-top: 1.5rem; font-size: .9375rem; color: var(--muted); padding-left: 1rem; border-left: 2px solid var(--accent); }
+
+/* ---------------- offers ---------------- */
+.rcard.preferred { border-top: 3px solid var(--accent); }
+.pricerow { display: flex; align-items: baseline; margin: .8rem 0 1rem; }
+.pricerow .pl { margin-bottom: 5px; }
+.price { font-size: 1.25rem; font-weight: 700; color: var(--ink); white-space: nowrap; }
+.price small { display: block; font-size: .8125rem; font-weight: 400; color: var(--muted); letter-spacing: .05em; text-align: right; }
+.rcard .offer-body { font-size: .9375rem; color: var(--muted); margin-bottom: 1rem; }
+
+/* ---------------- cross-reference band ---------------- */
+.xref {
+  display: block; border: 1px solid var(--line); border-radius: 2px;
+  padding: 16px 24px; text-decoration: none; margin-block: 0;
+}
+.xref:hover { border-color: var(--accent); }
+.xref-kick { display: block; font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: .35rem; }
+.xref-title { font-family: var(--display); font-weight: 700; font-size: clamp(1.1rem, 2vw, 1.25rem); color: var(--ink); }
+.xref-sub { display: block; font-size: .9375rem; color: var(--muted); margin-top: .3rem; }
+
+/* ---------------- sign-off ---------------- */
+.signoff-panel { background: var(--surface); border: 1px solid var(--line); border-radius: 2px; padding: clamp(24px, 4vw, 44px); }
+.signoff-panel h2 { font-size: clamp(1.4rem, 3vw, 2rem); margin-bottom: .8rem; }
+.signoff-panel p { color: var(--muted); max-width: 58ch; margin-bottom: 1.5rem; }
+
+/* ---------------- CAD title block footer ---------------- */
+.tblock {
+  border: 2px solid var(--line); border-radius: 2px; overflow: hidden;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line);
+  margin: var(--gap) auto clamp(1.5rem, 4vw, 2.5rem);
+}
+@media (min-width: 900px) { .tblock { grid-template-columns: 2fr 1fr 1fr 1fr; } }
+.tcell { background: var(--bg); padding: 10px 14px; min-width: 0; }
+.tcell b { display: block; font-size: .75rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: .15rem; }
+.tcell span, .tcell a { font-family: var(--mono); font-size: .875rem; color: var(--ink); text-decoration: none; overflow-wrap: anywhere; }
+.tcell a { display: inline-block; padding-block: .85rem; margin-block: -.35rem; } /* 44px target without bloating the cell */
+.tcell a:hover { color: var(--accent); }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+
+/* offer badges: citation handles, drawing item-balloon grammar */
+.obadge {
+  display: block; font-family: var(--mono); font-size: .8125rem; font-weight: 700;
+  color: var(--accent); letter-spacing: .1em; margin-bottom: .6rem;
+}
+/* the explained salience on the entry offer */
+.ptag {
+  position: absolute; top: -1px; right: 16px;
+  background: var(--accent); color: var(--on-accent);
+  font-family: var(--mono); font-size: .75rem; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase;
+  padding: 2px 8px; border-radius: 0 0 2px 2px;
+}
