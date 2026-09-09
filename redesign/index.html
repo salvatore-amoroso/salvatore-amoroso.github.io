@@ -31,7 +31,7 @@
 
     <div class="hero-grid">
       <div>
-        <p class="kicker-line">Enterprise integration &mdash; DWG. NO. SA-001</p>
+        <p class="kicker-line">Enterprise integration &middot; DWG. NO. SA-001</p>
         <h1>Your enterprise deals keep dying on <span class="hl">&ldquo;does it integrate with SAP?&rdquo;</span></h1>
 
         <p class="lead">I build that answer. Zero to one SAP integrations for B2B SaaS products, and the connective tissue between SAP and everything else.</p>
@@ -41,7 +41,7 @@
         <!-- EDIT: contact. Placeholder address, assembled by JS so scrapers
              that only parse markup get nothing. Swap data-u/data-d before launch. -->
         <div class="cta-row">
-          <a class="btn-p mailto" href="#" data-u="inquiries" data-d="amoroso.com">Contact me</a>
+          <a class="btn-p mailto" href="#" data-u="inquiries" data-d="amoroso.com" hidden>Contact me</a>
           <a class="btn-g" href="../background.html">Track record</a>
         </div>
         <p class="cta-note">I reply within one business day.
@@ -55,9 +55,9 @@
       <figure class="portrait">
         <div class="pframe">
           <span class="pmono" aria-hidden="true">SA</span>
-          <img src="../assets/portrait.jpg" alt="Salvatore Amoroso" onerror="this.remove()">
+          <img src="../assets/portrait.jpg" alt="Salvatore Amoroso" data-portrait hidden>
         </div>
-        <figcaption>S. Amoroso &mdash; Zurich, CH</figcaption>
+        <figcaption>S. Amoroso &middot; Zurich, CH</figcaption>
       </figure>
     </div>
   </div>
@@ -248,7 +248,8 @@
       </div>
       <div class="signoff-panel">
         <p>A product that needs an SAP integration, a landscape that needs untangling, or an architecture you want a second opinion on. Send me the shape of the problem and I will tell you honestly whether I am the right person for it.</p>
-        <a class="btn-p mailto" href="#" data-u="inquiries" data-d="amoroso.com">Contact me</a>
+        <a class="btn-p mailto" href="#" data-u="inquiries" data-d="amoroso.com" hidden>Contact me</a>
+        <noscript><p class="nojs-mail">inquiries [at] amoroso.com</p></noscript>
         <p class="cta-note">I reply within one business day.</p>
       </div>
     </div>
@@ -260,11 +261,11 @@
 <footer>
   <div class="wrap">
     <div class="tblock">
-      <div class="tcell"><b>Project</b><span>SAP integration &mdash; zero to one</span></div>
+      <div class="tcell"><b>Project</b><span>SAP integration &middot; zero to one</span></div>
       <div class="tcell"><b>Drawn by</b><span>S. Amoroso</span></div>
       <div class="tcell"><b>Loc</b><span>Zurich, CH</span></div>
       <div class="tcell"><b>Date</b><span>2026-08 &middot; &copy; <span class="yr">2026</span></span></div>
-      <div class="tcell"><b>Contact</b><a class="mailto" href="#" data-u="inquiries" data-d="amoroso.com">Contact me</a></div>
+      <div class="tcell"><b>Contact</b><a class="mailto" href="#" data-u="inquiries" data-d="amoroso.com" hidden>Contact me</a><noscript><span class="nojs-mail">inquiries [at] amoroso.com</span></noscript></div>
       <div class="tcell"><b>Sheet</b><span><a href="../background.html">1 of 2</a></span></div>
       <div class="tcell"><b>Status</b><span>As-built</span></div>
       <div class="tcell"><b>Terms</b><span>Contracting, IP, and insurance terms with every proposal</span></div>
@@ -277,7 +278,12 @@
   // Assemble the address at runtime so harvesters that only parse markup get nothing.
   document.querySelectorAll('.mailto').forEach(function (a) {
     a.href = 'mailto:' + a.dataset.u + '@' + a.dataset.d +
-             '?subject=' + encodeURIComponent('SAP integration enquiry');
+             '?subject=' + encodeURIComponent('SAP integration inquiry');
+    a.hidden = false;
+  });
+  document.querySelectorAll('[data-portrait]').forEach(function (img) {
+    function reveal() { if (img.naturalWidth) img.hidden = false; }
+    if (img.complete) { reveal(); } else { img.addEventListener('load', reveal, { once: true }); }
   });
 </script>
 

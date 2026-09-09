@@ -59,7 +59,7 @@
            every lead this page generates bounces. The address is assembled in
            JS so scrapers cannot lift it from the markup. -->
       <p class="cta-line">
-        <a class="maillink mailto" href="#" data-u="inquiries" data-d="amoroso.com">Contact me</a>
+        <a class="maillink mailto" href="#" data-u="inquiries" data-d="amoroso.com" hidden>Contact me</a>
         <noscript><span class="nojs-mail">inquiries [at] amoroso.com</span></noscript>
       </p>
       <p class="cta-note">I reply within one business day.</p>
@@ -69,7 +69,7 @@
          automatically. No markup change needed. Until then the SA monogram shows. -->
     <div class="avatar">
       <span aria-hidden="true">SA</span>
-      <img src="assets/portrait.jpg" alt="Salvatore Amoroso" onerror="this.remove()">
+      <img src="assets/portrait.jpg" alt="Salvatore Amoroso" data-portrait hidden>
     </div>
   </div>
 </header>
@@ -234,7 +234,7 @@
       <h2>Tell me where it is stuck</h2>
       <p>A product that needs an SAP integration, a landscape that needs untangling, or an architecture you want a second opinion on. Send me the shape of the problem and I will tell you honestly whether I am the right person for it.</p>
       <p class="cta-line">
-        <a class="maillink mailto" href="#" data-u="inquiries" data-d="amoroso.com">Contact me</a>
+        <a class="maillink mailto" href="#" data-u="inquiries" data-d="amoroso.com" hidden>Contact me</a>
         <noscript><span class="nojs-mail">inquiries [at] amoroso.com</span></noscript>
       </p>
       <p class="cta-note">I reply within one business day.</p>
@@ -254,7 +254,12 @@
   document.querySelectorAll('.yr').forEach(function (e) { e.textContent = new Date().getFullYear(); });
   // Assemble the address at runtime. Harvesters that only parse markup get nothing.
   document.querySelectorAll('.mailto').forEach(function (a) {
-    a.href = 'mailto:' + a.dataset.u + '@' + a.dataset.d + '?subject=' + encodeURIComponent('SAP integration enquiry');
+    a.href = 'mailto:' + a.dataset.u + '@' + a.dataset.d + '?subject=' + encodeURIComponent('SAP integration inquiry');
+    a.hidden = false;
+  });
+  document.querySelectorAll('[data-portrait]').forEach(function (img) {
+    function reveal() { if (img.naturalWidth) img.hidden = false; }
+    if (img.complete) { reveal(); } else { img.addEventListener('load', reveal, { once: true }); }
   });
 </script>
 

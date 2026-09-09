@@ -168,7 +168,7 @@
       <h2>Tell me where it is stuck</h2>
       <p>If any of the above looks like your situation, send me the shape of the problem and I will tell you honestly whether I am the right person for it.</p>
       <p class="cta-line">
-        <a class="maillink mailto" href="#" data-u="inquiries" data-d="amoroso.com">Contact me</a>
+        <a class="maillink mailto" href="#" data-u="inquiries" data-d="amoroso.com" hidden>Contact me</a>
         <noscript><span class="nojs-mail">inquiries [at] amoroso.com</span></noscript>
       </p>
     </div>
@@ -188,7 +188,8 @@
   // Assemble the address at runtime so harvesters that only parse markup get nothing.
   document.querySelectorAll('.mailto').forEach(function (a) {
     a.href = 'mailto:' + a.dataset.u + '@' + a.dataset.d +
-             '?subject=' + encodeURIComponent('SAP integration enquiry');
+             '?subject=' + encodeURIComponent('SAP integration inquiry');
+    a.hidden = false;
   });
 </script>
 

@@ -149,13 +149,14 @@ h2 { font-size: clamp(1.6rem, 1.2rem + 1.7vw, 2.35rem); margin-bottom: .85rem; }
 @media (min-width: 46rem) {
   .avatar { width: clamp(8rem, 22vw, 11.5rem); font-size: clamp(2.6rem, 8vw, 3.75rem); }
 }
-/* The photo covers the monogram once it loads. If assets/portrait.jpg is
-   missing the <img> removes itself and the SA monogram shows through, so
-   the page never renders a broken-image icon. */
+/* The photo covers the monogram only after it loads. Keeping a failed or
+   JavaScript-disabled image hidden leaves the SA monogram visible without a
+   broken-image icon or its alt text. */
 .avatar img {
   position: absolute; inset: 0;
   width: 100%; height: 100%; object-fit: cover; display: block;
 }
+.avatar img[hidden] { display: none !important; }
 
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
@@ -394,6 +395,7 @@ footer .wrap a:hover { color: var(--accent); }
   text-decoration: none; box-shadow: var(--shadow);
   transition: transform .15s ease, filter .15s ease;
 }
+.maillink[hidden] { display: none !important; }
 .maillink::before {
   content: "@"; font-size: 1.25em; font-weight: 700; line-height: 1;
   transform: translateY(-.03em);
@@ -402,4 +404,3 @@ footer .wrap a:hover { color: var(--accent); }
 @media (prefers-reduced-motion: reduce) { .maillink:hover { transform: none; } }
 
 .nojs-mail { font-size: .95rem; color: var(--muted); }
-
