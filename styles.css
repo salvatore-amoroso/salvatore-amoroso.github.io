@@ -337,6 +337,11 @@ footer .wrap a:hover { color: var(--accent); }
   border-top: 1px solid var(--line); font-size: .85rem; color: var(--muted);
 }
 .eng > p:last-of-type { margin-bottom: 1.25rem; }
+.eng-terms::before {
+  content: "Examples";
+  font-size: .75rem; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--accent);
+}
 .eng-terms li { padding-left: 1.05rem; position: relative; }
 .eng-terms li::before {
   content: ""; position: absolute; left: 0; top: .6em;
