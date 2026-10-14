@@ -23,7 +23,7 @@
 <meta name="theme-color" content="#0e1213" media="(prefers-color-scheme: dark)">
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f6069'/%3E%3Ctext x='32' y='43' font-family='Helvetica,Arial,sans-serif' font-size='30' font-weight='700' fill='%23fff' text-anchor='middle'%3ESA%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css?v=20261014-projects">
 </head>
 
 <body>
@@ -169,22 +169,22 @@
     <div class="wrap">
       <a href="index.html#engagements">
         <span class="lbl">Ways to work together</span>
-        <span class="ttl">Roles, projects, and fractional leadership &rarr;</span>
-        <span class="sub2">Permanent or contract roles, SAP integration projects, fractional leadership, and support for SAP partners.</span>
+        <span class="ttl">Assessment, delivery, and architecture leadership &rarr;</span>
+        <span class="sub2">SAP integration assessments, implementation and handover, and ongoing technical leadership with your engineers or my own delivery team.</span>
       </a>
     </div>
   </section>
 
   <section class="contact">
     <div class="wrap">
-      <h2>Talk to me about a role or project</h2>
-      <p>Tell me about the role, project, or SAP integration challenge you have in mind, and any timing or location requirements. I am open to permanent roles, contract assignments, and project work. A CV is available on request.</p>
+      <h2>Discuss your SAP integration project</h2>
+      <p>Tell me what you need to integrate, what is blocking progress, and your target timeline. We&rsquo;ll discuss scope, delivery responsibilities, and the next step.</p>
       <p class="cta-line">
-        <a class="maillink mailto" href="#" data-u="s.amoroso00" data-d="gmail.com" hidden>Contact me</a>
+        <a class="maillink mailto" href="#" data-u="s.amoroso00" data-d="gmail.com" hidden>Discuss your SAP integration project</a>
         <noscript><span class="nojs-mail">s.amoroso00 [at] gmail.com</span></noscript>
       </p>
-      <p class="cta-note">I reply within one business day.</p>
-      <p class="cta-note">For project work, we agree scope, responsibilities, and terms before getting started.</p>
+      <p class="cta-note">I reply within one business day. We agree scope, responsibilities, and terms before getting started.</p>
+      <p class="cta-note">Also open to selected permanent and contract SAP architecture roles. <a class="rolelink mailto" href="#" data-u="s.amoroso00" data-d="gmail.com" hidden>CV available on request.</a><noscript>CV available by email.</noscript></p>
     </div>
   </section>
 </main>
@@ -201,8 +201,9 @@
   document.querySelectorAll('.yr').forEach(function (e) { e.textContent = new Date().getFullYear(); });
   // Assemble the address at runtime so harvesters that only parse markup get nothing.
   document.querySelectorAll('.mailto').forEach(function (a) {
+    var subject = a.classList.contains('rolelink') ? 'SAP architecture role inquiry' : 'SAP integration project inquiry';
     a.href = 'mailto:' + a.dataset.u + '@' + a.dataset.d +
-             '?subject=' + encodeURIComponent('SAP role or project inquiry');
+             '?subject=' + encodeURIComponent(subject);
     a.hidden = false;
   });
 </script>
