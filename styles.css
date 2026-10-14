@@ -321,12 +321,12 @@ footer .wrap a:hover { color: var(--accent); }
 }
 .case-out strong { color: var(--accent); font-weight: 700; }
 
-/* ---------------- priced entry offer ---------------- */
-.eng-price {
+/* ---------------- engagement summaries ---------------- */
+.eng-summary {
   font-family: var(--mono); font-size: 1.15rem; font-weight: 700;
   color: var(--accent); margin: -.2rem 0 .75rem; line-height: 1.3;
 }
-.eng-price span {
+.eng-summary span {
   display: block; font-family: var(--font); font-size: .82rem;
   font-weight: 600; color: var(--muted); letter-spacing: 0; margin-top: .15rem;
 }
@@ -338,7 +338,7 @@ footer .wrap a:hover { color: var(--accent); }
 }
 .eng > p:last-of-type { margin-bottom: 1.25rem; }
 .eng-terms::before {
-  content: "Examples";
+  content: attr(data-label);
   font-size: .75rem; font-weight: 700; letter-spacing: .14em;
   text-transform: uppercase; color: var(--accent);
 }
@@ -354,10 +354,14 @@ footer .wrap a:hover { color: var(--accent); }
   padding-left: 1rem; border-left: 2px solid var(--accent);
 }
 
+.recent-work { margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--line); }
+.recent-work h3 { font-size: 1.15rem; margin-bottom: .75rem; }
+.recent-work > p:not(.eyebrow) { font-size: .97rem; color: var(--muted); max-width: 75ch; }
 
-/* Desktop: each offer becomes a full-width band (title and price left, body
+
+/* Desktop: each offer becomes a full-width band (title and summary left, body
    and terms right). Three 850px towers at 34 characters a line read as a
-   wall; bands give the copy a ~64ch measure and put the price where the
+   wall; bands give the copy a ~64ch measure and put the summary where the
    eye starts. Mobile keeps the stacked card. */
 @media (min-width: 58rem) {
   .engage { gap: 1.5rem; }
@@ -370,7 +374,7 @@ footer .wrap a:hover { color: var(--accent); }
   }
   .eng::before { grid-column: 1; grid-row: 1; }
   .eng-head    { grid-column: 1; grid-row: 2; }
-  .eng > p:not(.eng-price) { grid-column: 2; grid-row: 1 / span 2; max-width: 64ch; }
+  .eng > p { grid-column: 2; grid-row: 1 / span 2; max-width: 64ch; }
   .eng-terms   { grid-column: 2; grid-row: 3; margin-top: 1.5rem; max-width: 64ch; }
 }
 
