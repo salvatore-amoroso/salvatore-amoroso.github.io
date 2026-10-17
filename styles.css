@@ -347,7 +347,7 @@ footer .wrap a:hover { color: var(--accent); }
    page's primary action, but it is still a plain hyperlink, so right-click
    copy-address and open-in-new-tab behave as a visitor expects. The address
    is assembled by JS into the href, so markup-only scrapers get nothing;
-   the visible label stays "Contact me". */
+   the visible label invites a project discussion. */
 .cta-line { margin-bottom: .5rem; }
 .contact .cta-line { text-align: center; }
 
