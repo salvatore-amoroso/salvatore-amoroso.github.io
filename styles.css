@@ -376,13 +376,16 @@ footer .wrap a:hover { color: var(--accent); }
 .study-links a { padding-block: .65rem; font-size: .9rem; color: var(--muted); text-underline-offset: .2em; }
 .study-pagehead h1 { max-width: 20ch; }
 .study { padding-block: var(--gap); border-top: 1px solid var(--line); scroll-margin-top: 1.5rem; }
+.study:first-child { padding-top: clamp(1.75rem, 4vw, 3rem); }
 .study:nth-of-type(2) { background: var(--surface); }
 .study h2 { max-width: 30ch; }
 .study-intro { max-width: 74ch; color: var(--muted); }
 .study-facts { display: grid; gap: 1.25rem; margin: 2rem 0 2.5rem; }
 .study-facts dt { font-size: .78rem; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--accent); margin-bottom: .35rem; }
 .study-facts dd { margin: 0; color: var(--muted); font-size: .93rem; }
+#synchronization .study-facts > div:first-child { grid-column: 1 / -1; max-width: 85ch; }
 @media (min-width: 46rem) { .study-facts { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; } }
+@media (min-width: 46rem) { #synchronization .study-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .study-figures { display: grid; gap: 2rem; }
 .study-figure { margin: 0; min-width: 0; }
 .study-figure figcaption { margin-top: .75rem; color: var(--muted); font-size: .88rem; }

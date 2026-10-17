@@ -20,7 +20,7 @@
 <meta name="theme-color" content="#fbfbfa" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0e1213" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f6069'/%3E%3Ctext x='32' y='43' font-family='Helvetica,Arial,sans-serif' font-size='30' font-weight='700' fill='%23fff' text-anchor='middle'%3ESA%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="styles.css?v=20261017-static-images">
+<link rel="stylesheet" href="styles.css?v=20261017-case-context">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -43,7 +43,7 @@
       <h2 id="synchronization-title">Ordered synchronization from SAP to SaaS</h2>
       <p class="study-intro">I redesigned SAP-to-SaaS processing around ordered object queues. Dependent updates stay in sequence while independent queues run in parallel. Failed units retry in place, and unchanged PUT payloads skip the outbound request.</p>
       <dl class="study-facts">
-        <div><dt>Problem</dt><dd>Improve throughput while preserving dependencies and the order of changes.</dd></div>
+        <div><dt>Problem</dt><dd>The architecture was not Clean Core compliant. Initial and delta loads were slow, especially for materials and invoices. Errors were never retried, so brief outages or temporary errors failed entire units. There was no versioning: only the active time period was considered, leaving future-dated updates unhandled. Every SAP update triggered a service call, even when the SaaS data stayed unchanged, increasing service load and customers&rsquo; middleware costs.</dd></div>
         <div><dt>My work</dt><dd>Processing architecture and implementation, including queues, caching, and change detection.</dd></div>
         <div><dt>Result</dt><dd>Ordered updates, isolated queue blocking, and fewer unnecessary PUT requests.</dd></div>
       </dl>
