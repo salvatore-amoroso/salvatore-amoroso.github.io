@@ -20,7 +20,7 @@
 <meta name="theme-color" content="#fbfbfa" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0e1213" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f6069'/%3E%3Ctext x='32' y='43' font-family='Helvetica,Arial,sans-serif' font-size='30' font-weight='700' fill='%23fff' text-anchor='middle'%3ESA%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="styles.css?v=20261017-intro-spacing">
+<link rel="stylesheet" href="styles.css?v=20261017-complete">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -33,6 +33,12 @@
     <p class="eyebrow">Selected work</p>
     <h1>SAP integration case studies</h1>
     <p class="lead">Selected work in integration architecture, operational tooling, and supplier workflows.</p>
+    <nav class="study-links study-contents" aria-label="Choose a case study">
+      <a href="#synchronization">SAP synchronization</a>
+      <a href="#expense-monitor">Agentic AI workflows</a>
+      <a href="#supplier-workspace">Supplier self-service</a>
+      <a href="#fun-projects">Side project</a>
+    </nav>
   </div>
 </header>
 
@@ -43,32 +49,43 @@
       <h2 id="synchronization-title">Faster, more reliable SAP-to-SaaS synchronization</h2>
       <p class="study-intro">A redesign of the synchronization layer between a SaaS product and its customers&rsquo; SAP systems.</p>
       <dl class="study-facts">
-        <div><dt>Problem</dt><dd>The architecture was not Clean Core compliant. Initial and delta loads were slow, especially for materials and invoices. Errors were never retried, so brief outages or temporary errors failed entire units. There was no versioning: only the active time period was considered, leaving future-dated updates unhandled. Every SAP update triggered a service call, even when the SaaS data stayed unchanged, increasing service load and customers&rsquo; middleware costs.</dd></div>
+        <div><dt>Problem</dt><dd>Slow loads, failures without retries, missed future-dated updates, and unchanged data sent repeatedly to the SaaS API.</dd></div>
         <div><dt>My work</dt><dd>Rebuilt data access around SAP interfaces and ordered parallel queues, with retries, version handling for current and future periods, caching, and PUT change detection.</dd></div>
-        <div><dt>Result</dt><dd>Faster loads, recovery after temporary failures, and less service and middleware traffic in a Clean Core B compliant architecture.</dd></div>
+        <div><dt>Result</dt><dd>Faster loads, recovery after temporary failures, and less service and middleware traffic. SAP interfaces replaced direct database reads.</dd></div>
       </dl>
 
       <div class="study-figures">
         <figure class="study-figure">
+          <ol class="study-mobile-flow" aria-label="Before synchronization flow">
+            <li><strong>Read SAP database</strong><span>Direct access to HANA or non-HANA data.</span></li>
+            <li><strong>Map to JSON</strong><span>No retry or version handling.</span></li>
+            <li><strong>Send to SaaS API</strong><span>Every update triggers a call.</span></li>
+          </ol>
           <div class="study-diagram" tabindex="0" role="region" aria-label="Before architecture diagram; scroll horizontally to explore">
             <img src="assets/case-studies/synchronization-before.svg" width="1280" height="720" decoding="async" alt="Before: a direct SAP HANA or non-HANA database read feeds JSON mapping, then sends data to an external SaaS API.">
           </div>
           <figcaption><strong>Before.</strong> Direct database reads, JSON mapping, and API delivery. <a href="assets/case-studies/synchronization-before.svg" target="_blank" rel="noopener">Open full-size before diagram</a>.</figcaption>
         </figure>
         <figure class="study-figure">
-          <p class="figure-stage">After &middot; Clean Core B compliant architecture</p>
+          <p class="figure-stage">After &middot; SAP interfaces and ordered queues</p>
+          <ol class="study-mobile-flow" aria-label="After synchronization flow">
+            <li><strong>Read through SAP interfaces</strong><span>BAPI, IDoc, output messages, BOR, and CDS views.</span></li>
+            <li><strong>Process ordered queues</strong><span>Retry a failed unit in place. Hold its dependent work while independent queues continue.</span></li>
+            <li><strong>Check PUT payload changes</strong><span>Compare with the last successful update. Send changed or new content; skip identical content.</span></li>
+            <li><strong>Save on success</strong><span>Save the new hash after a successful PUT. On failure, retain the baseline and retry.</span></li>
+          </ol>
           <div class="study-diagram" tabindex="0" role="region" aria-label="After architecture diagram; scroll horizontally to explore">
             <img src="assets/case-studies/synchronization-after.svg" width="1920" height="900" loading="lazy" decoding="async" alt="SAP interfaces feed ordered object queues. A supplier retry holds its purchase order while other queues continue. Cost-center versions arrive in order. Per-object PUT hash checks send changed content and skip unchanged updates.">
           </div>
           <figcaption><strong>After.</strong> SAP interfaces, ordered dependencies, parallel execution, and PUT change detection. <a href="assets/case-studies/synchronization-after.svg" target="_blank" rel="noopener">Open full-size after diagram</a>.</figcaption>
         </figure>
       </div>
-      <p class="study-image-hint">Scroll within a diagram to explore it, or open the full-size image.</p>
       <p class="study-download"><a href="assets/case-studies/synchronization-comparison.svg" download>Download the before-and-after comparison (SVG)</a></p>
 
       <details class="service study-detail">
         <summary><span class="service-title">How synchronization works</span><span class="service-overview">Dependencies, retry behavior, and PUT change detection.</span></summary>
         <div class="service-details">
+          <p>Initial and delta loads, especially for materials and invoices, were slow. Temporary errors failed entire units, future-dated versions were missed, and unchanged updates increased service load and middleware costs.</p>
           <ol class="study-steps">
             <li>BAPI, IDoc, output messages, BOR, and CDS views feed the object queues.</li>
             <li>A queue can contain multiple object types. In this example, the supplier resolves before the purchase order in the same queue.</li>
@@ -78,8 +95,11 @@
             <li>A successful PUT saves the new hash. Failure retains the previous baseline so the update remains eligible for retry. Other HTTP methods bypass this PUT-specific check.</li>
           </ol>
           <p>The diagram illustrates processing behavior. Queue allocation, retry timing, and the hash algorithm depend on the implementation.</p>
+          <p>The Clean Core change shown here is replacing direct database reads with SAP interfaces. API choices and release status depend on the target SAP system.</p>
+          <p>In a separate SAP integration project, parallel processing, queues, caching, and hashing delivered at least 5&times; the throughput of the previous monolithic implementation. That comparison depends on customer system capacity and allocated resources.</p>
         </div>
       </details>
+      <p class="study-discover"><a class="mailto" href="#" data-u="s.amoroso00" data-d="gmail.com" hidden>Discuss your SAP integration &rarr;</a></p>
     </div>
   </article>
 
@@ -87,17 +107,17 @@
     <div class="wrap">
       <p class="eyebrow">02 &middot; Agentic expense workflow</p>
       <h2 id="expense-monitor-title">Clear visibility into expense agent actions</h2>
-      <p class="study-intro">An SAP workspace for the people responsible for an agentic expense workflow.</p>
+      <p class="study-intro">Supporting agentic AI transformation with SAP workflow configuration, execution tracking, and posting visibility.</p>
       <dl class="study-facts">
         <div><dt>Problem</dt><dd>The agentic SaaS worked as intended, but the customer had no clear view of the agent&rsquo;s actions or their status in SAP.</dd></div>
         <div><dt>My work</dt><dd>Built workflow configuration, execution logs, expense details, and queue and FI/HCM status views, with direct links to the related SAP records.</dd></div>
         <div><dt>Result</dt><dd>Customers can see which actions are complete, which are still processing, and which need attention.</dd></div>
       </dl>
       <figure class="study-figure">
-        <a class="study-screenshot" href="assets/case-studies/expense-agent-workflow.png?v=20261017-crop" target="_blank" rel="noopener" aria-label="Open the full agentic expense workflow application screenshot">
+        <a class="study-screenshot expense-preview" href="assets/case-studies/expense-agent-workflow.png?v=20261017-crop" target="_blank" rel="noopener" aria-label="Open the full agentic expense workflow application screenshot">
           <img src="assets/case-studies/expense-agent-workflow.png?v=20261017-crop" width="2559" height="1253" loading="lazy" decoding="async" alt="Full Expense Agent Monitor application with Configure Agent Workflow, Display Agent Execution Log, Display Parallel Queues, integration settings, expense details, document links, and FI/HCM posting statuses.">
         </a>
-        <figcaption>The full application: workflow configuration and execution tools above the expense details and posting table. <a href="assets/case-studies/expense-agent-workflow.png?v=20261017-crop" target="_blank" rel="noopener">Open the full-size application screenshot</a>.</figcaption>
+        <figcaption>Completed actions and exceptions, with separate FI/HCM posting states. <a href="assets/case-studies/expense-agent-workflow.png?v=20261017-crop" target="_blank" rel="noopener">Open the full application for workflow settings, queues, and SAP record links</a>.</figcaption>
       </figure>
       <details class="service study-detail">
         <summary><span class="service-title">Workflow configuration and execution tracking</span><span class="service-overview">Agent settings, execution logs, queues, and SAP processing outcomes.</span></summary>
@@ -110,6 +130,7 @@
           </ol>
         </div>
       </details>
+      <p class="study-discover"><a class="mailto" href="#" data-u="s.amoroso00" data-d="gmail.com" hidden>Discuss your SAP-connected AI workflow &rarr;</a></p>
     </div>
   </article>
 
@@ -155,6 +176,20 @@
     </div>
   </article>
 
+  <section class="contact">
+    <div class="wrap">
+      <h2>Let&rsquo;s discuss your SAP project</h2>
+      <p>Tell me what you need to connect or improve. We&rsquo;ll discuss scope and terms by email.</p>
+      <p class="cta-line">
+        <a class="maillink mailto" href="#" data-u="s.amoroso00" data-d="gmail.com" hidden>Discuss your project</a>
+        <noscript><span class="nojs-mail">s.amoroso00@gmail.com</span></noscript>
+      </p>
+      <p class="cta-note">You&rsquo;ll hear back within one business day.</p>
+      <p class="cta-note"><a class="email-address mailto" href="#" data-u="s.amoroso00" data-d="gmail.com" hidden>Email address</a></p>
+      <p class="cta-note">Open to selected permanent and contract SAP architecture roles. <a class="rolelink mailto" href="#" data-u="s.amoroso00" data-d="gmail.com" hidden>Send the role brief for a tailored CV.</a><noscript>Tailored CV available by email.</noscript></p>
+    </div>
+  </section>
+
   <section class="study" id="fun-projects" aria-labelledby="fun-projects-title">
     <div class="wrap">
       <p class="eyebrow">Fun project</p>
@@ -169,18 +204,7 @@
     </div>
   </section>
 
-  <section class="contact">
-    <div class="wrap">
-      <h2>Let&rsquo;s discuss your SAP project</h2>
-      <p>Share what you need to connect or improve and your timeline. We&rsquo;ll agree on the next step together.</p>
-      <p class="cta-line">
-        <a class="maillink mailto" href="#" data-u="s.amoroso00" data-d="gmail.com" hidden>Discuss your project</a>
-        <noscript><span class="nojs-mail">s.amoroso00 [at] gmail.com</span></noscript>
-      </p>
-      <p class="cta-note">You&rsquo;ll hear back within one business day.</p>
-      <p class="cta-note">Open to selected permanent and contract SAP architecture roles. <a class="rolelink mailto" href="#" data-u="s.amoroso00" data-d="gmail.com" hidden>Request my CV.</a><noscript>CV available by email.</noscript></p>
-    </div>
-  </section>
+
 </main>
 <footer>
   <div class="wrap">
@@ -194,6 +218,7 @@
   document.querySelectorAll('.mailto').forEach(function (a) {
     var subject = a.classList.contains('rolelink') ? 'SAP architecture role inquiry' : 'SAP integration project inquiry';
     a.href = 'mailto:' + a.dataset.u + '@' + a.dataset.d + '?subject=' + encodeURIComponent(subject);
+    if (a.classList.contains('email-address')) a.textContent = a.dataset.u + '@' + a.dataset.d;
     a.hidden = false;
   });
 </script>

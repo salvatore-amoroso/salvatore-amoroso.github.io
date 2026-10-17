@@ -23,7 +23,7 @@
 <meta name="theme-color" content="#0e1213" media="(prefers-color-scheme: dark)">
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f6069'/%3E%3Ctext x='32' y='43' font-family='Helvetica,Arial,sans-serif' font-size='30' font-weight='700' fill='%23fff' text-anchor='middle'%3ESA%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="styles.css?v=20261017-cases">
+<link rel="stylesheet" href="styles.css?v=20261017-complete">
 </head>
 
 <body>
@@ -33,6 +33,7 @@
     <a class="backlink" href="index.html">&larr; Salvatore Amoroso</a>
     <h1>Ten years of SAP delivery</h1>
     <p class="lead">Experience across consulting, systems integration, software platforms, and SaaS products.</p>
+    <p class="cta-note">Hiring for an SAP architecture role? <a class="rolelink mailto" href="#" data-u="s.amoroso00" data-d="gmail.com" hidden>Send the role brief for a tailored CV.</a><noscript>Tailored CV available by email.</noscript></p>
     <p class="study-discover"><a href="case-studies.html">Explore case studies &rarr;</a></p>
   </div>
 </header>
@@ -67,7 +68,7 @@
         <article class="vp">
           <p class="when">2022 to 2026</p>
           <h3>B2B SaaS product</h3>
-          <p class="txt">Designed and delivered multi-tenant SAP integration products, led SAP teams, and supported enterprise technical evaluations.</p>
+          <p class="txt">Designed and delivered multi-tenant SAP integration products, built and led a six-person SAP team, and owned integration architecture, hiring, and delivery standards.</p>
         </article>
 
       </div>
@@ -180,13 +181,13 @@
   <section class="contact">
     <div class="wrap">
       <h2>Let&rsquo;s discuss your SAP project</h2>
-      <p>Share what you need to connect or improve and your timeline. We&rsquo;ll agree on the next step together.</p>
+      <p>Tell me what you need to connect or improve. We&rsquo;ll discuss scope and terms by email.</p>
       <p class="cta-line">
         <a class="maillink mailto" href="#" data-u="s.amoroso00" data-d="gmail.com" hidden>Discuss your project</a>
-        <noscript><span class="nojs-mail">s.amoroso00 [at] gmail.com</span></noscript>
+        <noscript><span class="nojs-mail">s.amoroso00@gmail.com</span></noscript>
       </p>
       <p class="cta-note">You&rsquo;ll hear back within one business day.</p>
-      <p class="cta-note">Open to selected permanent and contract SAP architecture roles. <a class="rolelink mailto" href="#" data-u="s.amoroso00" data-d="gmail.com" hidden>Request my CV.</a><noscript>CV available by email.</noscript></p>
+      <p class="cta-note"><a class="email-address mailto" href="#" data-u="s.amoroso00" data-d="gmail.com" hidden>Email address</a></p>
     </div>
   </section>
 </main>
@@ -194,7 +195,7 @@
 <footer>
   <div class="wrap">
     <span>&copy; <span class="yr">2026</span> Salvatore Amoroso</span>
-    <span><a href="index.html">Home</a></span>
+    <span><a href="index.html">Home</a> &middot; <a href="https://www.linkedin.com/in/salvatore-amoroso-640279159/">LinkedIn</a></span>
     <span>Zurich, Switzerland</span>
   </div>
 </footer>
@@ -206,6 +207,7 @@
     var subject = a.classList.contains('rolelink') ? 'SAP architecture role inquiry' : 'SAP integration project inquiry';
     a.href = 'mailto:' + a.dataset.u + '@' + a.dataset.d +
              '?subject=' + encodeURIComponent(subject);
+    if (a.classList.contains('email-address')) a.textContent = a.dataset.u + '@' + a.dataset.d;
     a.hidden = false;
   });
 </script>
