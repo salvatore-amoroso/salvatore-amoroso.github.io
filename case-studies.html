@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SAP integration case studies | Salvatore Amoroso</title>
+<meta name="theme-color" content="#f6f5f1">
 <meta name="description" content="SAP integration case studies: ordered synchronization, agentic expense workflow configuration and tracking, and a supplier app sold to Italian customers.">
 <link rel="canonical" href="https://salvatore-amoroso.github.io/case-studies.html">
 <meta property="og:type" content="website">
@@ -11,41 +12,66 @@
 <meta property="og:description" content="SAP integration case studies: ordered synchronization, agentic expense workflow configuration and tracking, and a supplier app sold to Italian customers.">
 <meta property="og:url" content="https://salvatore-amoroso.github.io/case-studies.html">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://salvatore-amoroso.github.io/assets/case-studies/case-studies-preview.png">
-<meta property="og:image:alt" content="Salvatore Amoroso: SAP integration case studies. Architecture, operational tooling, and supplier workflows.">
+<meta property="og:image" content="https://salvatore-amoroso.github.io/assets/social-preview.png">
+<meta property="og:image:alt" content="Complex SAP. Clear delivery. Salvatore Amoroso — SAP integration architect and delivery lead.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="SAP integration case studies | Salvatore Amoroso">
 <meta name="twitter:description" content="SAP integration case studies: ordered synchronization, agentic expense workflow configuration and tracking, and a supplier app sold to Italian customers.">
-<meta name="twitter:image" content="https://salvatore-amoroso.github.io/assets/case-studies/case-studies-preview.png">
-<meta name="theme-color" content="#fbfbfa" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0e1213" media="(prefers-color-scheme: dark)">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f6069'/%3E%3Ctext x='32' y='43' font-family='Helvetica,Arial,sans-serif' font-size='30' font-weight='700' fill='%23fff' text-anchor='middle'%3ESA%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="styles.css?v=20261017-complete">
+<meta name="twitter:image" content="https://salvatore-amoroso.github.io/assets/social-preview.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23b63b29'/%3E%3Ctext x='32' y='43' font-family='Helvetica,Arial,sans-serif' font-size='30' font-weight='700' fill='%23fff' text-anchor='middle'%3ESA%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css?v=20261017-swiss">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<header class="pagehead study-pagehead">
-  <div class="wrap">
-    <nav class="study-links" aria-label="Main navigation">
-      <a href="index.html">&larr; Home</a>
-      <a href="background.html">Track record</a>
-    </nav>
-    <p class="eyebrow">Selected work</p>
-    <h1>SAP integration case studies</h1>
-    <p class="lead">Selected work in integration architecture, operational tooling, and supplier workflows.</p>
-    <nav class="study-links study-contents" aria-label="Choose a case study">
-      <a href="#synchronization">SAP synchronization</a>
-      <a href="#expense-monitor">Agentic AI workflows</a>
-      <a href="#supplier-workspace">Supplier self-service</a>
-      <a href="#fun-projects">Side project</a>
-    </nav>
-  </div>
-</header>
+<div class="wrap"><header class="top">
+  <a class="brand" href="index.html">Salvatore Amoroso<span class="brand-dot">.</span></a>
+  <nav class="nav" aria-label="Main navigation">
+    <a href="case-studies.html" aria-current="page">Work</a><a class="secondary" href="background.html">Track record</a><a href="#contact">Let’s talk <span aria-hidden="true">↗</span></a>
+  </nav>
+</header></div><header class="pagehead"><div class="wrap"><p class="eyebrow">Selected work</p>
+  <h1>Architecture.<br> In practice.</h1>
+  <p class="lead">The problems, the engineering, and the results.</p>
+  <nav class="study-links study-contents" aria-label="Choose a case study"><a href="#product">Integration at scale</a><a href="#synchronization">SAP synchronization</a><a href="#expense-monitor">AI workflows</a><a href="#supplier-workspace">Supplier self-service</a><a href="#fun-projects">Side project</a></nav>
+</div></header><main id="main" class="detail-main" tabindex="-1"><article class="study" id="product" aria-labelledby="product-title">
+    <div class="wrap">
+      <p class="eyebrow">01 / Product architecture · 2022–2026</p>
+      <h2 id="product-title">One product, 150+ SAP customer integrations</h2>
 
-<main id="main">
+      <ul class="case-out">
+        <li><strong>150+</strong> SAP customer integrations on one product</li>
+        <li><strong>20.9% &rarr; &lt;0.1%</strong> documents needing provider intervention, including L1 support</li>
+        <li><strong>60% shorter</strong> time from project start to go-live</li>
+      </ul>
+
+      <p class="case-summary">I designed and delivered a multi-tenant SAP integration product for expense and invoice automation across ECC and S/4HANA, and led two SAP teams.</p>
+
+      <details class="service study-detail">
+        <summary><span class="service-title">Delivery scope and result context</span><span class="service-overview">Architecture, my contribution, and what the figures compare.</span></summary>
+        <div class="service-details case">
+        <div class="case-body">
+          <p>Queued, idempotent posting prevents duplicates. Master data is validated before sending, and failed documents can be corrected and reprocessed.</p>
+          <p>The intervention rate compares documents processed with the old architecture against the new architecture. Intervention means any provider-side help, including L1 support; it is not a document failure rate or a measure of customer-side effort.</p>
+          <p>Time-to-value compares project start to go-live under the old and new delivery approach. Developer tooling and deployment automation shortened that period by 60%.</p>
+        </div>
+
+        <dl class="case-facts">
+          <div><dt>Role</dt><dd>Solution architect and principal integration engineer</dd></div>
+          <div><dt>Span</dt><dd>2022 to 2026</dd></div>
+          <div><dt>Targets</dt><dd>SAP ECC 6.0, S/4HANA, private cloud, public cloud</dd></div>
+          <div><dt>Middleware</dt><dd>SAP Integration Suite &mdash; Cloud Integration (CPI), PI/PO, third-party platforms</dd></div>
+          <div><dt>Modules</dt><dd>FI-CO, MM, HR, and HCM</dd></div>
+        </dl>
+        </div>
+      </details>
+
+      <p class="case-note">Product-wide results delivered with these teams. My contribution: architecture, principal engineering, SAP team leadership, and enterprise evaluations. Customer names are confidential.</p>
+
+
+    </div>
+  </article>
   <article class="study" id="synchronization" aria-labelledby="synchronization-title">
     <div class="wrap">
-      <p class="eyebrow">01 &middot; Architecture and implementation</p>
+      <p class="eyebrow">02 / Architecture and implementation</p>
       <h2 id="synchronization-title">Faster, more reliable SAP-to-SaaS synchronization</h2>
       <p class="study-intro">A redesign of the synchronization layer between a SaaS product and its customers&rsquo; SAP systems.</p>
       <dl class="study-facts">
@@ -99,13 +125,13 @@
           <p>In a separate SAP integration project, parallel processing, queues, caching, and hashing delivered at least 5&times; the throughput of the previous monolithic implementation. That comparison depends on customer system capacity and allocated resources.</p>
         </div>
       </details>
-      <p class="study-discover"><a class="mailto" href="#" data-u="s.amoroso00" data-d="gmail.com" hidden>Discuss your SAP integration &rarr;</a></p>
+      <p class="study-discover"><a class="mailto" href="mailto:s.amoroso00@gmail.com?subject=SAP%20integration%20project%20inquiry">Discuss your SAP integration &rarr;</a></p>
     </div>
   </article>
 
   <article class="study" id="expense-monitor" aria-labelledby="expense-monitor-title">
     <div class="wrap">
-      <p class="eyebrow">02 &middot; Agentic expense workflow</p>
+      <p class="eyebrow">03 / Agentic expense workflow</p>
       <h2 id="expense-monitor-title">Clear visibility into expense agent actions</h2>
       <p class="study-intro">Supporting agentic AI transformation with SAP workflow configuration, execution tracking, and posting visibility.</p>
       <dl class="study-facts">
@@ -130,13 +156,13 @@
           </ol>
         </div>
       </details>
-      <p class="study-discover"><a class="mailto" href="#" data-u="s.amoroso00" data-d="gmail.com" hidden>Discuss your SAP-connected AI workflow &rarr;</a></p>
+      <p class="study-discover"><a class="mailto" href="mailto:s.amoroso00@gmail.com?subject=SAP%20integration%20project%20inquiry">Discuss your SAP-connected AI workflow &rarr;</a></p>
     </div>
   </article>
 
   <article class="study" id="supplier-workspace" aria-labelledby="supplier-workspace-title">
     <div class="wrap">
-      <p class="eyebrow">03 &middot; Commercial application</p>
+      <p class="eyebrow">04 / Commercial application</p>
       <h2 id="supplier-workspace-title">A simpler, responsive supplier workspace</h2>
       <p class="study-intro">A supplier self-service app sold to multiple Italian customers in aviation, pharmaceuticals, and retail.</p>
       <p class="study-note">The screenshots show this app using sample data. Customer identities are confidential.</p>
@@ -176,19 +202,7 @@
     </div>
   </article>
 
-  <section class="contact">
-    <div class="wrap">
-      <h2>Let&rsquo;s discuss your SAP project</h2>
-      <p>Tell me what you need to connect or improve. We&rsquo;ll discuss scope and terms by email.</p>
-      <p class="cta-line">
-        <a class="maillink mailto" href="#" data-u="s.amoroso00" data-d="gmail.com" hidden>Discuss your project</a>
-        <noscript><span class="nojs-mail">s.amoroso00@gmail.com</span></noscript>
-      </p>
-      <p class="cta-note">You&rsquo;ll hear back within one business day.</p>
-      <p class="cta-note"><a class="email-address mailto" href="#" data-u="s.amoroso00" data-d="gmail.com" hidden>Email address</a></p>
-      <p class="cta-note">Open to selected permanent and contract SAP architecture roles. <a class="rolelink mailto" href="#" data-u="s.amoroso00" data-d="gmail.com" hidden>Send the role brief for a tailored CV.</a><noscript>Tailored CV available by email.</noscript></p>
-    </div>
-  </section>
+
 
   <section class="study" id="fun-projects" aria-labelledby="fun-projects-title">
     <div class="wrap">
@@ -205,22 +219,16 @@
   </section>
 
 
-</main>
-<footer>
-  <div class="wrap">
-    <span>&copy; <span class="yr">2026</span> Salvatore Amoroso</span>
-    <span><a href="index.html">Home</a> &middot; <a href="background.html">Track record</a></span>
-    <span>Zurich, Switzerland</span>
-  </div>
-</footer>
-<script>
-  document.querySelectorAll('.yr').forEach(function (e) { e.textContent = new Date().getFullYear(); });
-  document.querySelectorAll('.mailto').forEach(function (a) {
-    var subject = a.classList.contains('rolelink') ? 'SAP architecture role inquiry' : 'SAP integration project inquiry';
-    a.href = 'mailto:' + a.dataset.u + '@' + a.dataset.d + '?subject=' + encodeURIComponent(subject);
-    if (a.classList.contains('email-address')) a.textContent = a.dataset.u + '@' + a.dataset.d;
-    a.hidden = false;
-  });
-</script>
+<section id="contact" aria-labelledby="contact-title"><div class="wrap"><div class="contact">
+  <p class="eyebrow">Have something to connect?</p>
+  <div class="contact-grid"><h2 id="contact-title">Let’s make<br> it work.</h2><div>
+    <a class="button" href="mailto:s.amoroso00@gmail.com?subject=SAP%20integration%20project%20inquiry">Discuss your project <span aria-hidden="true">↗</span></a>
+    <p class="contact-line">With your engineers or a team I bring.<br> Architecture roles? <a href="mailto:s.amoroso00@gmail.com?subject=SAP%20architecture%20role%20inquiry">Send the brief ↗</a></p>
+  </div></div>
+</div></div></section></main><div class="wrap"><footer class="foot">
+  <span>© <span class="yr">2026</span> Salvatore Amoroso · Zurich</span>
+  <nav aria-label="Elsewhere"><a href="background.html">Track record ↗</a><a href="https://www.linkedin.com/in/salvatore-amoroso-640279159/">LinkedIn ↗</a><a href="mailto:s.amoroso00@gmail.com">Email ↗</a></nav>
+</footer></div>
+<script src="site.js" defer></script>
 </body>
 </html>
