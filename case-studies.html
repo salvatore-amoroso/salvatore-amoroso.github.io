@@ -44,8 +44,8 @@
       <p class="study-intro">I redesigned SAP-to-SaaS processing around ordered object queues. Dependent updates stay in sequence while independent queues run in parallel. Failed units retry in place, and unchanged PUT payloads skip the outbound request.</p>
       <dl class="study-facts">
         <div><dt>Problem</dt><dd>The architecture was not Clean Core compliant. Initial and delta loads were slow, especially for materials and invoices. Errors were never retried, so brief outages or temporary errors failed entire units. There was no versioning: only the active time period was considered, leaving future-dated updates unhandled. Every SAP update triggered a service call, even when the SaaS data stayed unchanged, increasing service load and customers&rsquo; middleware costs.</dd></div>
-        <div><dt>My work</dt><dd>Processing architecture and implementation, including queues, caching, and change detection.</dd></div>
-        <div><dt>Result</dt><dd>Ordered updates, isolated queue blocking, and fewer unnecessary PUT requests.</dd></div>
+        <div><dt>My work</dt><dd>Replaced direct database reads with SAP interfaces and ordered parallel queues. Added retries, version handling for current and future periods, caching, and PUT payload hashing.</dd></div>
+        <div><dt>Result</dt><dd>Clean Core B compliant processing with faster initial and delta loads, recovery from temporary failures, and ordered future-dated updates. Unchanged PUT payloads skip outbound calls, reducing service load and middleware traffic.</dd></div>
       </dl>
 
       <div class="study-figures">
@@ -90,8 +90,8 @@
       <p class="study-intro">I built an SAP application to configure and track how an agentic expense workflow interacts with the system. It brings workflow configuration, execution logs, parallel queues, expense details, and FI/HCM posting status into one workspace.</p>
       <dl class="study-facts">
         <div><dt>Problem</dt><dd>The agentic SaaS worked as intended, but the customer had no clear view of the agent&rsquo;s actions or their status in SAP.</dd></div>
-        <div><dt>My work</dt><dd>Workflow configuration, execution monitoring, queue visibility, and links to integration records.</dd></div>
-        <div><dt>Result</dt><dd>One application to configure the workflow, follow execution, and investigate posting outcomes.</dd></div>
+        <div><dt>My work</dt><dd>Built an SAP application combining agent configuration, execution logs, queue visibility, expense details, and FI/HCM posting status, with links to the underlying SAP records.</dd></div>
+        <div><dt>Result</dt><dd>Customers can follow the agent&rsquo;s actions, see their status, and investigate errors from one workspace.</dd></div>
       </dl>
       <figure class="study-figure">
         <a class="study-screenshot" href="assets/case-studies/expense-agent-workflow.png?v=20261017-crop" target="_blank" rel="noopener" aria-label="Open the full agentic expense workflow application screenshot">
@@ -121,8 +121,8 @@
       <p class="study-note">The screenshots show this app using sample data. Customer identities are confidential.</p>
       <dl class="study-facts">
         <div><dt>Problem</dt><dd>SAP transactions were too difficult for most end users. Customers needed a simpler, responsive interface for everyday tasks.</dd></div>
-        <div><dt>My work</dt><dd>Supplier workflow design and SAPUI5 application development.</dd></div>
-        <div><dt>Result</dt><dd>A commercial application sold across three sectors in Italy.</dd></div>
+        <div><dt>My work</dt><dd>Designed and built a responsive SAPUI5 application with simpler flows for purchase-order confirmations, delivery notices, and invoices.</dd></div>
+        <div><dt>Result</dt><dd>End users have a simpler interface for everyday supplier tasks that adapts to their screen. The application was sold to multiple Italian customers across aviation, pharmaceuticals, and retail.</dd></div>
       </dl>
       <figure class="study-figure">
         <a class="study-screenshot" href="assets/case-studies/supplier-purchase-order.png" target="_blank" rel="noopener" aria-label="Open full-size supplier purchase order screenshot">
