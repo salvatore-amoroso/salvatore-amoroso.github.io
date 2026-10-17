@@ -375,9 +375,6 @@ footer .wrap a:hover { color: var(--accent); }
 .study-links { display: flex; flex-wrap: wrap; gap: .5rem 1.75rem; margin-bottom: 1.75rem; }
 .study-links a { padding-block: .65rem; font-size: .9rem; color: var(--muted); text-underline-offset: .2em; }
 .study-pagehead h1 { max-width: 20ch; }
-.study-jumps { display: flex; flex-wrap: wrap; gap: .25rem 1.75rem; padding-block: 2rem; }
-.study-jumps a { display: inline-block; padding-block: .7rem; font-size: .93rem; text-underline-offset: .2em; }
-.study-jumps span { margin-right: .35rem; font-family: var(--mono); font-size: .8rem; color: var(--accent); }
 .study { padding-block: var(--gap); border-top: 1px solid var(--line); scroll-margin-top: 1.5rem; }
 .study:nth-of-type(2) { background: var(--surface); }
 .study h2 { max-width: 30ch; }
