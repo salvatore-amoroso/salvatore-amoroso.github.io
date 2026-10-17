@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="900" viewBox="0 0 1920 900" role="img" aria-labelledby="title description">
+  <title id="title">Parallel object synchronization</title>
+  <desc id="description">The flow reads from left to right: SAP interfaces are on the left and the external SaaS system is on the right. SAP interfaces including BAPI, IDoc, output messages, BOR, and CDS views feed the Object queues group. The purchase-order queue contains a supplier before its order; the illustrated supplier failure retries and holds the order. A Versioned Object queue illustrates the same cost center progressing through v1, v2, and v3, with changes to different fields delivered in order so updates are not lost through reordering. Additional queues are represented by an ellipsis and may run independently. The PUT path compares each object's payload hash with its last successful update. Identical payloads skip the request and complete the unit. Changed or new payloads are sent to the external SaaS system; success saves the hash. Failure retains the prior hash and blocks the affected queue. Other HTTP methods are outside this simplified PUT view.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1 1 L9 5 L1 9" fill="none" stroke="#829b9d" stroke-width="1.5" />
+    </marker>
+    <marker id="retry-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1 1 L9 5 L1 9" fill="none" stroke="#d3ad72" stroke-width="1.5" />
+    </marker>
+    <marker id="skip-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1 1 L9 5 L1 9" fill="none" stroke="#87c6bc" stroke-width="1.5" />
+    </marker>
+    <style>
+      text { font-family: Inter, Arial, sans-serif; fill: #edf3f2; }
+      .muted { fill: #a8bab9; }
+      .label { font-size: 26px; font-weight: 500; }
+      .small { font-size: 20px; }
+      .queue-group { fill: none; stroke: #3d5959; stroke-width: 1.5; }
+      .lane { fill: #142326; }
+      .node { fill: #172224; stroke: #364d4e; stroke-width: 1.5; }
+      .running { fill: #155963; }
+      .retry { fill: #30281e; stroke: #8d724a; stroke-width: 1.5; }
+      .amber { fill: #d3ad72; }
+      .green { fill: #87c6bc; }
+      .wire { fill: none; stroke: #829b9d; stroke-width: 2; stroke-linejoin: round; }
+      .retry-wire { fill: none; stroke: #d3ad72; stroke-width: 2; stroke-linejoin: round; }
+      .skip-wire { fill: none; stroke: #87c6bc; stroke-width: 2; stroke-linejoin: round; }
+    </style>
+  </defs>
+  <rect width="1920" height="900" fill="#0e181a" />
+  <text x="64" y="80" font-size="44" font-weight="500">Parallel object synchronization</text>
+  <text x="64" y="128" font-size="22" class="green">Clean Core B compliant architecture</text>
+
+  <g id="sync-flow">
+  <rect x="64" y="375" width="244" height="268" rx="12" class="node" />
+  <text x="88" y="415" font-size="23" class="muted">SAP interfaces</text>
+  <text x="88" y="456" font-size="22">BAPI</text>
+  <text x="88" y="493" font-size="22">IDoc</text>
+  <text x="88" y="530" font-size="22">Output messages</text>
+  <text x="88" y="567" font-size="22">BOR</text>
+  <text x="88" y="604" font-size="22">CDS views</text>
+  <path d="M308 509 H344 V337 H384" class="wire" marker-end="url(#arrow)" />
+  <path d="M344 509 V565 H384" class="wire" marker-end="url(#arrow)" />
+  <path d="M344 565 V682 H384" class="wire" marker-end="url(#arrow)" />
+
+  <g transform="translate(320 0)">
+    <rect x="40" y="180" width="668" height="660" rx="20" class="queue-group" />
+    <text x="64" y="220" class="label">Object queues</text>
+
+    <rect x="64" y="246" width="620" height="202" rx="16" class="lane" />
+    <text x="88" y="282" font-size="23" class="muted">Purchase Order queue</text>
+    <rect x="90" y="300" width="190" height="74" rx="10" class="retry" />
+    <text x="185" y="331" text-anchor="middle" class="label">Supplier</text>
+    <text x="185" y="358" text-anchor="middle" class="small amber">Retrying</text>
+    <path d="M286 337 H394" class="wire" stroke-dasharray="4 6" marker-end="url(#arrow)" />
+    <rect x="400" y="300" width="260" height="74" rx="10" class="node" />
+    <text x="530" y="331" text-anchor="middle" class="label">Purchase order</text>
+    <text x="530" y="358" text-anchor="middle" class="small muted">Waiting</text>
+    <path d="M185 374 V414 H116 V374" class="retry-wire" marker-end="url(#retry-arrow)" />
+    <text x="220" y="420" class="small amber">Queue blocked</text>
+
+    <rect x="64" y="472" width="620" height="150" rx="16" class="lane" />
+    <text x="88" y="509" font-size="23" class="muted">Versioned Object · Cost Centers</text>
+    <rect x="90" y="534" width="150" height="62" rx="10" class="running" />
+    <text x="165" y="559" text-anchor="middle" font-size="26" font-weight="500">v1</text>
+    <text x="165" y="584" text-anchor="middle" font-size="18">Field A</text>
+    <path d="M246 565 H294" class="wire" marker-end="url(#arrow)" />
+    <rect x="300" y="534" width="150" height="62" rx="10" class="node" />
+    <text x="375" y="559" text-anchor="middle" font-size="26" font-weight="500">v2</text>
+    <text x="375" y="584" text-anchor="middle" font-size="18" class="muted">Field B</text>
+    <path d="M456 565 H504" class="wire" marker-end="url(#arrow)" />
+    <rect x="510" y="534" width="150" height="62" rx="10" class="node" />
+    <text x="585" y="559" text-anchor="middle" font-size="26" font-weight="500">v3</text>
+    <text x="585" y="584" text-anchor="middle" font-size="18" class="muted">Field C</text>
+
+    <rect x="64" y="646" width="620" height="72" rx="16" class="lane" />
+    <text x="88" y="690" font-size="23" class="muted">Additional queues …</text>
+
+    <text x="64" y="772" class="small muted">Same object: field and version changes arrive in order.</text>
+    <text x="64" y="803" class="small green">No updates lost to reordering.</text>
+
+    <path d="M684 337 H800" class="wire" marker-end="url(#arrow)" />
+    <path d="M684 565 H740 V337" class="wire" />
+    <path d="M684 682 H740 V565" class="wire" />
+    <text x="800" y="256" font-size="18" class="muted" letter-spacing="1.5">PUT UPDATES</text>
+    <rect x="800" y="293" width="240" height="88" rx="12" class="node" />
+    <text x="920" y="330" text-anchor="middle" class="label">PUT hash check</text>
+    <text x="920" y="362" text-anchor="middle" class="small muted">vs last success</text>
+
+    <path d="M1040 337 H1240" class="wire" marker-end="url(#arrow)" />
+    <text x="1140" y="316" text-anchor="middle" class="small muted">Changed / new</text>
+    <rect x="1240" y="293" width="296" height="88" rx="12" class="node" />
+    <text x="1388" y="330" text-anchor="middle" class="label">External SaaS</text>
+    <text x="1388" y="362" text-anchor="middle" class="small muted">Send PUT</text>
+    <text x="1388" y="423" text-anchor="middle" class="small muted">Save hash on success</text>
+
+    <path d="M920 381 V624 H1240" class="skip-wire" marker-end="url(#skip-arrow)" />
+    <text x="1080" y="603" text-anchor="middle" class="small green">Same hash</text>
+    <rect x="1240" y="580" width="296" height="88" rx="12" class="node" />
+    <text x="1388" y="617" text-anchor="middle" class="label">Skip PUT</text>
+    <text x="1388" y="649" text-anchor="middle" class="small muted">Continue queue</text>
+  </g>
+  </g>
+</svg>

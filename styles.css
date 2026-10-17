@@ -166,35 +166,36 @@ h2 { font-size: clamp(1.6rem, 1.2rem + 1.7vw, 2.35rem); margin-bottom: .85rem; }
 /* full-width hairline marking the hero handoff into the first section */
 .ruled { border-top: 1px solid var(--line); }
 
-/* ---------------- cards ---------------- */
-.cards { display: grid; gap: 1.5rem; grid-template-columns: 1fr; }
-/* 58rem, not 46rem: three across on a portrait tablet leaves ~210px per card. */
-@media (min-width: 58rem) { .cards { grid-template-columns: repeat(3, 1fr); } }
-
-.card { background: var(--surface); border: 1px solid var(--line); border-radius: 1rem; padding: clamp(1.5rem, 3vw, 2rem); box-shadow: var(--shadow); }
-.card h3 { font-size: 1.15rem; margin-bottom: .5rem; }
-.card .who { font-size: .8rem; font-weight: 600; color: var(--accent); margin-bottom: .9rem; }
-.card ul { display: grid; gap: .6rem; font-size: .93rem; color: var(--muted); }
-.card li { padding-left: 1.1rem; position: relative; }
-.card li::before { content: ""; position: absolute; left: 0; top: .62em; width: .35rem; height: .35rem; border-radius: 50%; background: var(--accent); }
-
-/* ---------------- engagements ---------------- */
-.engage { display: grid; gap: 1.25rem; grid-template-columns: 1fr; counter-reset: eng; }
-
-.eng {
-  border: 2px solid var(--accent); border-radius: 1rem;
-  padding: clamp(1.5rem, 3vw, 1.9rem); background: var(--surface);
-  box-shadow: var(--shadow); counter-increment: eng;
-  /* column layout so the terms list bottom-aligns across all three cards */
-  display: flex; flex-direction: column;
+/* ---------------- expandable services ---------------- */
+.services { display: grid; gap: 1rem; }
+.service {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: 1rem; box-shadow: var(--shadow);
 }
-.eng::before {
-  content: counter(eng, decimal-leading-zero);
-  display: block; font-family: var(--mono); font-size: .8rem;
-  color: var(--accent); font-weight: 700; margin-bottom: .8rem;
+.service > summary {
+  position: relative; padding: 1.35rem 4rem 1.35rem 1.5rem;
+  cursor: pointer; list-style: none; border-radius: 1rem;
 }
-.eng h3 { font-size: 1.08rem; margin-bottom: .55rem; }
-.eng p { font-size: .93rem; color: var(--muted); }
+.service > summary::-webkit-details-marker { display: none; }
+.service > summary::after {
+  content: "+"; position: absolute; top: 1.35rem; right: 1.5rem;
+  color: var(--accent); font-size: 1.6rem; line-height: 1;
+}
+.service[open] > summary::after { content: "\2212"; }
+.service > summary:hover .service-title { color: var(--accent); }
+.service-title { display: block; font-size: 1.15rem; font-weight: 700; line-height: 1.3; }
+.service-overview { display: block; margin-top: .4rem; max-width: 75ch; font-size: .97rem; color: var(--muted); }
+.service-details {
+  margin: 0 1.5rem; padding-block: 1.25rem;
+  border-top: 1px solid var(--line); font-size: .93rem; color: var(--muted);
+}
+.service-details > ul { display: grid; gap: .6rem; }
+.service-details > ul > li { padding-left: 1.1rem; position: relative; }
+.service-details > ul > li::before {
+  content: ""; position: absolute; left: 0; top: .62em;
+  width: .35rem; height: .35rem; border-radius: 50%; background: var(--accent);
+}
+.service-details > p { margin-top: 1rem; font-size: .88rem; }
 
 /* ---------------- domains ---------------- */
 .domains { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 1rem; overflow: hidden; }
@@ -321,33 +322,6 @@ footer .wrap a:hover { color: var(--accent); }
 }
 .case-out strong { color: var(--accent); font-weight: 700; }
 
-/* ---------------- engagement summaries ---------------- */
-.eng-summary {
-  font-family: var(--mono); font-size: 1.15rem; font-weight: 700;
-  color: var(--accent); margin: -.2rem 0 .75rem; line-height: 1.3;
-}
-.eng-summary span {
-  display: block; font-family: var(--font); font-size: .82rem;
-  font-weight: 600; color: var(--muted); letter-spacing: 0; margin-top: .15rem;
-}
-.eng-terms {
-  /* auto top margin pushes the list to the card floor, so the three
-     terms blocks align even though the body copy differs in length */
-  display: grid; gap: .5rem; margin-top: auto; padding-top: 1.25rem;
-  border-top: 1px solid var(--line); font-size: .85rem; color: var(--muted);
-}
-.eng > p:last-of-type { margin-bottom: 1.25rem; }
-.eng-terms::before {
-  content: attr(data-label);
-  font-size: .75rem; font-weight: 700; letter-spacing: .14em;
-  text-transform: uppercase; color: var(--accent);
-}
-.eng-terms li { padding-left: 1.05rem; position: relative; }
-.eng-terms li::before {
-  content: ""; position: absolute; left: 0; top: .6em;
-  width: .3rem; height: .3rem; border-radius: 50%; background: var(--accent);
-}
-
 /* references disclosure under the case study */
 .case-note {
   margin-top: 1.75rem; font-size: .88rem; color: var(--muted);
@@ -358,25 +332,6 @@ footer .wrap a:hover { color: var(--accent); }
 .recent-work h3 { font-size: 1.15rem; margin-bottom: .75rem; }
 .recent-work > p:not(.eyebrow) { font-size: .97rem; color: var(--muted); max-width: 75ch; }
 
-
-/* Desktop: each offer becomes a full-width band (title and summary left, body
-   and terms right). Three 850px towers at 34 characters a line read as a
-   wall; bands give the copy a ~64ch measure and put the summary where the
-   eye starts. Mobile keeps the stacked card. */
-@media (min-width: 58rem) {
-  .engage { gap: 1.5rem; }
-  .eng {
-    display: grid;
-    grid-template-columns: 15rem 1fr;
-    grid-template-rows: auto auto auto;
-    column-gap: clamp(2.5rem, 5vw, 4rem);
-    align-items: start;
-  }
-  .eng::before { grid-column: 1; grid-row: 1; }
-  .eng-head    { grid-column: 1; grid-row: 2; }
-  .eng > p { grid-column: 2; grid-row: 1 / span 2; max-width: 64ch; }
-  .eng-terms   { grid-column: 2; grid-row: 3; margin-top: 1.5rem; max-width: 64ch; }
-}
 
 /* ---------------- enterprise reach strip ---------------- */
 .reach {
@@ -413,3 +368,37 @@ footer .wrap a:hover { color: var(--accent); }
 @media (prefers-reduced-motion: reduce) { .maillink:hover { transform: none; } }
 
 .nojs-mail { font-size: .95rem; color: var(--muted); }
+
+/* ---------------- project case studies ---------------- */
+.study-discover { margin-top: 1.5rem; font-weight: 600; }
+.study-discover a { display: inline-block; padding-block: .65rem; color: var(--accent); text-underline-offset: .2em; }
+.study-links { display: flex; flex-wrap: wrap; gap: .5rem 1.75rem; margin-bottom: 1.75rem; }
+.study-links a { padding-block: .65rem; font-size: .9rem; color: var(--muted); text-underline-offset: .2em; }
+.study-pagehead h1 { max-width: 20ch; }
+.study-jumps { display: flex; flex-wrap: wrap; gap: .25rem 1.75rem; padding-block: 2rem; }
+.study-jumps a { display: inline-block; padding-block: .7rem; font-size: .93rem; text-underline-offset: .2em; }
+.study-jumps span { margin-right: .35rem; font-family: var(--mono); font-size: .8rem; color: var(--accent); }
+.study { padding-block: var(--gap); border-top: 1px solid var(--line); scroll-margin-top: 1.5rem; }
+.study:nth-of-type(2) { background: var(--surface); }
+.study h2 { max-width: 30ch; }
+.study-intro { max-width: 74ch; color: var(--muted); }
+.study-facts { display: grid; gap: 1.25rem; margin: 2rem 0 2.5rem; }
+.study-facts dt { font-size: .78rem; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--accent); margin-bottom: .35rem; }
+.study-facts dd { margin: 0; color: var(--muted); font-size: .93rem; }
+@media (min-width: 46rem) { .study-facts { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; } }
+.study-figures { display: grid; gap: 2rem; }
+.study-figure { margin: 0; min-width: 0; }
+.study-figure figcaption { margin-top: .75rem; color: var(--muted); font-size: .88rem; }
+.study-figure figcaption a, .study-download a { color: var(--accent); text-underline-offset: .2em; }
+.figure-stage { margin-bottom: .75rem; font-size: .88rem; font-weight: 600; color: var(--accent); }
+.study-diagram { max-width: 100%; overflow-x: auto; border-radius: 1rem; background: #0e181a; }
+.study-diagram img { display: block; width: 100%; min-width: 60rem; height: auto; }
+.study-screenshot { display: block; border: 1px solid var(--line); border-radius: 1rem; overflow: hidden; }
+.study-screenshot img { display: block; width: 100%; height: auto; }
+.study-image-hint { display: none; margin-top: 1rem; color: var(--muted); font-size: .88rem; }
+@media (max-width: 66rem) { .study-image-hint { display: block; } }
+.study-download { margin-top: 1.5rem; font-size: .9rem; }
+.study-detail { margin-top: 2rem; }
+.study-detail .study-figure { margin-top: 1.5rem; }
+.study-steps { display: grid; gap: .6rem; list-style: decimal; padding-left: 1.25rem; }
+.study-note { margin-top: 1rem; padding-left: 1rem; border-left: 2px solid var(--accent); color: var(--muted); font-size: .9rem; }

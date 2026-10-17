@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SAP integration case studies | Salvatore Amoroso</title>
+<meta name="description" content="SAP integration case studies: ordered synchronization, agentic expense workflow configuration and tracking, and a supplier app sold to Italian customers.">
+<link rel="canonical" href="https://salvatore-amoroso.github.io/case-studies.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="SAP integration case studies | Salvatore Amoroso">
+<meta property="og:description" content="SAP integration case studies: ordered synchronization, agentic expense workflow configuration and tracking, and a supplier app sold to Italian customers.">
+<meta property="og:url" content="https://salvatore-amoroso.github.io/case-studies.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://salvatore-amoroso.github.io/assets/case-studies/case-studies-preview.png">
+<meta property="og:image:alt" content="Salvatore Amoroso: SAP integration case studies. Architecture, operational tooling, and supplier workflows.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SAP integration case studies | Salvatore Amoroso">
+<meta name="twitter:description" content="SAP integration case studies: ordered synchronization, agentic expense workflow configuration and tracking, and a supplier app sold to Italian customers.">
+<meta name="twitter:image" content="https://salvatore-amoroso.github.io/assets/case-studies/case-studies-preview.png">
+<meta name="theme-color" content="#fbfbfa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e1213" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f6069'/%3E%3Ctext x='32' y='43' font-family='Helvetica,Arial,sans-serif' font-size='30' font-weight='700' fill='%23fff' text-anchor='middle'%3ESA%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css?v=20261017-static-images">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="pagehead study-pagehead">
+  <div class="wrap">
+    <nav class="study-links" aria-label="Main navigation">
+      <a href="index.html">&larr; Home</a>
+      <a href="background.html">Track record</a>
+    </nav>
+    <p class="eyebrow">Selected work</p>
+    <h1>SAP integration case studies</h1>
+    <p class="lead">Selected work in integration architecture, operational tooling, and supplier workflows.</p>
+  </div>
+</header>
+
+<main id="main">
+  <nav class="wrap study-jumps" aria-label="On this page">
+    <a href="#synchronization"><span>01</span> Synchronization</a>
+    <a href="#expense-monitor"><span>02</span> Agentic expense workflow</a>
+    <a href="#supplier-workspace"><span>03</span> Supplier workspace</a>
+    <a href="#fun-projects"><span>Fun</span> Planeproof</a>
+  </nav>
+
+  <article class="study" id="synchronization" aria-labelledby="synchronization-title">
+    <div class="wrap">
+      <p class="eyebrow">01 &middot; Architecture and implementation</p>
+      <h2 id="synchronization-title">Ordered synchronization from SAP to SaaS</h2>
+      <p class="study-intro">I redesigned SAP-to-SaaS processing around ordered object queues. Dependent updates stay in sequence while independent queues run in parallel. Failed units retry in place, and unchanged PUT payloads skip the outbound request.</p>
+      <dl class="study-facts">
+        <div><dt>Problem</dt><dd>Improve throughput while preserving dependencies and the order of changes.</dd></div>
+        <div><dt>My work</dt><dd>Processing architecture and implementation, including queues, caching, and change detection.</dd></div>
+        <div><dt>Result</dt><dd>Ordered updates, isolated queue blocking, and fewer unnecessary PUT requests.</dd></div>
+      </dl>
+
+      <div class="study-figures">
+        <figure class="study-figure">
+          <div class="study-diagram" tabindex="0" role="region" aria-label="Before architecture diagram; scroll horizontally to explore">
+            <img src="assets/case-studies/synchronization-before.svg" width="1280" height="720" decoding="async" alt="Before: a direct SAP HANA or non-HANA database read feeds JSON mapping, then sends data to an external SaaS API.">
+          </div>
+          <figcaption><strong>Before.</strong> Direct database reads, JSON mapping, and API delivery. <a href="assets/case-studies/synchronization-before.svg" target="_blank" rel="noopener">Open full-size before diagram</a>.</figcaption>
+        </figure>
+        <figure class="study-figure">
+          <p class="figure-stage">After &middot; Clean Core B compliant architecture</p>
+          <div class="study-diagram" tabindex="0" role="region" aria-label="After architecture diagram; scroll horizontally to explore">
+            <img src="assets/case-studies/synchronization-after.svg" width="1920" height="900" loading="lazy" decoding="async" alt="SAP interfaces feed ordered object queues. A supplier retry holds its purchase order while other queues continue. Cost-center versions arrive in order. Per-object PUT hash checks send changed content and skip unchanged updates.">
+          </div>
+          <figcaption><strong>After.</strong> SAP interfaces, ordered dependencies, parallel execution, and PUT change detection. <a href="assets/case-studies/synchronization-after.svg" target="_blank" rel="noopener">Open full-size after diagram</a>.</figcaption>
+        </figure>
+      </div>
+      <p class="study-image-hint">Scroll within a diagram to explore it, or open the full-size image.</p>
+      <p class="study-download"><a href="assets/case-studies/synchronization-comparison.svg" download>Download the before-and-after comparison (SVG)</a></p>
+
+      <details class="service study-detail">
+        <summary><span class="service-title">How synchronization works</span><span class="service-overview">Dependencies, retry behavior, and PUT change detection.</span></summary>
+        <div class="service-details">
+          <ol class="study-steps">
+            <li>BAPI, IDoc, output messages, BOR, and CDS views feed the object queues.</li>
+            <li>A queue can contain multiple object types. In this example, the supplier resolves before the purchase order in the same queue.</li>
+            <li>A failed unit retries in place and blocks later units in that queue. Independent queues can continue.</li>
+            <li>Successive field or version changes to one object remain ordered, as shown by the cost-center example.</li>
+            <li>Before a PUT, compare the object's payload hash with its last successful outbound update. Identical content skips the request and completes the unit. Changed content or a missing baseline sends the PUT.</li>
+            <li>A successful PUT saves the new hash. Failure retains the previous baseline so the update remains eligible for retry. Other HTTP methods bypass this PUT-specific check.</li>
+          </ol>
+          <p>The diagram illustrates processing behavior. Queue allocation, retry timing, and the hash algorithm depend on the implementation.</p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="study" id="expense-monitor" aria-labelledby="expense-monitor-title">
+    <div class="wrap">
+      <p class="eyebrow">02 &middot; Agentic expense workflow</p>
+      <h2 id="expense-monitor-title">Configure and track how an expense agent interacts with SAP</h2>
+      <p class="study-intro">I built an SAP application to configure and track how an agentic expense workflow interacts with the system. It brings workflow configuration, execution logs, parallel queues, expense details, and FI/HCM posting status into one workspace.</p>
+      <dl class="study-facts">
+        <div><dt>Problem</dt><dd>Configure agent behavior and trace the workflow's interactions with SAP.</dd></div>
+        <div><dt>My work</dt><dd>Workflow configuration, execution monitoring, queue visibility, and links to integration records.</dd></div>
+        <div><dt>Result</dt><dd>One application to configure the workflow, follow execution, and investigate posting outcomes.</dd></div>
+      </dl>
+      <figure class="study-figure">
+        <a class="study-screenshot" href="assets/case-studies/expense-agent-workflow.png?v=20261017-crop" target="_blank" rel="noopener" aria-label="Open the full agentic expense workflow application screenshot">
+          <img src="assets/case-studies/expense-agent-workflow.png?v=20261017-crop" width="2559" height="1253" loading="lazy" decoding="async" alt="Full Expense Agent Monitor application with Configure Agent Workflow, Display Agent Execution Log, Display Parallel Queues, integration settings, expense details, document links, and FI/HCM posting statuses.">
+        </a>
+        <figcaption>The full application: workflow configuration and execution tools above the expense details and posting table. <a href="assets/case-studies/expense-agent-workflow.png?v=20261017-crop" target="_blank" rel="noopener">Open the full-size application screenshot</a>.</figcaption>
+      </figure>
+      <details class="service study-detail">
+        <summary><span class="service-title">Workflow configuration and execution tracking</span><span class="service-overview">Agent settings, execution logs, queues, and SAP processing outcomes.</span></summary>
+        <div class="service-details">
+          <ol class="study-steps">
+            <li>Configure the agent workflow and its integration settings.</li>
+            <li>Inspect execution logs and parallel queues to follow processing.</li>
+            <li>Review expense details, separate FI/HCM posting states, and business messages.</li>
+            <li>Follow the related accounting, HCM, or IDoc record to investigate the workflow's interactions with SAP.</li>
+          </ol>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="study" id="supplier-workspace" aria-labelledby="supplier-workspace-title">
+    <div class="wrap">
+      <p class="eyebrow">03 &middot; Commercial application</p>
+      <h2 id="supplier-workspace-title">A supplier workspace from order to invoice</h2>
+      <p class="study-intro">I built a supplier self-service application sold to multiple Italian customers in aviation, pharmaceuticals, and retail. Suppliers use it to confirm purchase orders, submit delivery notices, and prepare invoices against received quantities.</p>
+      <p class="study-note">The screenshots show this app using sample data. Customer identities are confidential.</p>
+      <dl class="study-facts">
+        <div><dt>Problem</dt><dd>Keep supplier documents consistent with acknowledged quantities and processing states.</dd></div>
+        <div><dt>My work</dt><dd>Supplier workflow design and SAPUI5 application development.</dd></div>
+        <div><dt>Result</dt><dd>A commercial application sold across three sectors in Italy.</dd></div>
+      </dl>
+      <figure class="study-figure">
+        <a class="study-screenshot" href="assets/case-studies/supplier-purchase-order.png" target="_blank" rel="noopener" aria-label="Open full-size supplier purchase order screenshot">
+          <img src="assets/case-studies/supplier-purchase-order.png" width="1440" height="950" loading="lazy" decoding="async" alt="Supplier app showing a purchase order with sample data: 100 confirmed units, 60 shipped and received units, and an accepted delivery notice in the document flow.">
+        </a>
+        <figcaption>Purchase-order quantities and related documents in the app, shown with sample data. <a href="assets/case-studies/supplier-purchase-order.png" target="_blank" rel="noopener">Open full-size purchase order</a>.</figcaption>
+      </figure>
+      <details class="service study-detail">
+        <summary><span class="service-title">Supplier workflow</span><span class="service-overview">Order confirmations, delivery notices, invoices, and processing feedback.</span></summary>
+        <div class="service-details">
+          <ol class="study-steps">
+            <li>Review and confirm an order, then submit a partial delivery notice.</li>
+            <li>Prepare an invoice against quantities recorded as received by the buyer.</li>
+            <li>Follow document acknowledgements and processing exceptions.</li>
+          </ol>
+          <figure class="study-figure">
+            <a class="study-screenshot" href="assets/case-studies/supplier-invoice.png" target="_blank" rel="noopener" aria-label="Open full-size supplier invoice dialog">
+              <img src="assets/case-studies/supplier-invoice.png" width="1122" height="778" loading="lazy" decoding="async" alt="Supplier app invoice dialog with sample data showing line quantities, acknowledged quantities, Save draft, and Save and submit actions.">
+            </a>
+            <figcaption>The invoice dialog keeps acknowledged quantities beside the quantities being submitted.</figcaption>
+          </figure>
+          <figure class="study-figure">
+            <a class="study-screenshot" href="assets/case-studies/supplier-overview.png" target="_blank" rel="noopener" aria-label="Open full-size supplier overview screenshot">
+              <img src="assets/case-studies/supplier-overview.png" width="1440" height="1100" loading="lazy" decoding="async" alt="Supplier app overview with sample data showing purchase orders, drafts, pending submissions, exceptions, and recent activity.">
+            </a>
+            <figcaption>The overview groups orders, drafts, pending submissions, and exceptions.</figcaption>
+          </figure>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <section class="study" id="fun-projects" aria-labelledby="fun-projects-title">
+    <div class="wrap">
+      <p class="eyebrow">Fun project</p>
+      <h2 id="fun-projects-title">Planeproof</h2>
+      <p class="study-intro">A side project that helps you choose where to watch a film: cinema, home, or a plane.</p>
+      <p class="study-discover"><a href="https://planeproof.vercel.app/" target="_blank" rel="noopener">Try Planeproof &nearr;</a></p>
+      <figure class="study-figure study-detail">
+        <a class="study-screenshot" href="https://planeproof.vercel.app/" target="_blank" rel="noopener" aria-label="Open the Planeproof app">
+          <img src="assets/case-studies/planeproof.png" width="2730" height="1713" loading="lazy" decoding="async" alt="Planeproof homepage showing film search, cinema, home, and plane viewing categories, and trending films.">
+        </a>
+      </figure>
+    </div>
+  </section>
+
+  <section class="contact">
+    <div class="wrap">
+      <h2>Discuss your SAP project</h2>
+      <p>Tell me what you need to connect, what is blocking you, and your timeline.</p>
+      <p class="cta-line">
+        <a class="maillink mailto" href="#" data-u="s.amoroso00" data-d="gmail.com" hidden>Email me</a>
+        <noscript><span class="nojs-mail">s.amoroso00 [at] gmail.com</span></noscript>
+      </p>
+      <p class="cta-note">I reply within one business day.</p>
+      <p class="cta-note">Open to selected permanent and contract SAP architecture roles. <a class="rolelink mailto" href="#" data-u="s.amoroso00" data-d="gmail.com" hidden>Request my CV.</a><noscript>CV available by email.</noscript></p>
+    </div>
+  </section>
+</main>
+<footer>
+  <div class="wrap">
+    <span>&copy; <span class="yr">2026</span> Salvatore Amoroso</span>
+    <span><a href="index.html">Home</a> &middot; <a href="background.html">Track record</a></span>
+    <span>Zurich, Switzerland</span>
+  </div>
+</footer>
+<script>
+  document.querySelectorAll('.yr').forEach(function (e) { e.textContent = new Date().getFullYear(); });
+  document.querySelectorAll('.mailto').forEach(function (a) {
+    var subject = a.classList.contains('rolelink') ? 'SAP architecture role inquiry' : 'SAP integration project inquiry';
+    a.href = 'mailto:' + a.dataset.u + '@' + a.dataset.d + '?subject=' + encodeURIComponent(subject);
+    a.hidden = false;
+  });
+</script>
+</body>
+</html>
