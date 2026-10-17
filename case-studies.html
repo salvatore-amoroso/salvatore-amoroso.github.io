@@ -41,11 +41,11 @@
     <div class="wrap">
       <p class="eyebrow">01 &middot; Architecture and implementation</p>
       <h2 id="synchronization-title">Faster, more reliable SAP-to-SaaS synchronization</h2>
-      <p class="study-intro">I redesigned the integration for faster loads, retries after temporary failures, and future-dated updates. The Clean Core B compliant architecture avoids redundant PUT calls, reducing service load and middleware traffic.</p>
+      <p class="study-intro">A redesign of the synchronization layer between a SaaS product and its customers&rsquo; SAP systems.</p>
       <dl class="study-facts">
         <div><dt>Problem</dt><dd>The architecture was not Clean Core compliant. Initial and delta loads were slow, especially for materials and invoices. Errors were never retried, so brief outages or temporary errors failed entire units. There was no versioning: only the active time period was considered, leaving future-dated updates unhandled. Every SAP update triggered a service call, even when the SaaS data stayed unchanged, increasing service load and customers&rsquo; middleware costs.</dd></div>
-        <div><dt>My work</dt><dd>Replaced direct database reads with SAP interfaces and ordered parallel queues. Added retries, version handling for current and future periods, caching, and PUT payload hashing.</dd></div>
-        <div><dt>Result</dt><dd>Clean Core B compliant processing with faster initial and delta loads, recovery from temporary failures, and ordered future-dated updates. Unchanged PUT payloads skip outbound calls, reducing service load and middleware traffic.</dd></div>
+        <div><dt>My work</dt><dd>Rebuilt data access around SAP interfaces and ordered parallel queues, with retries, version handling for current and future periods, caching, and PUT change detection.</dd></div>
+        <div><dt>Result</dt><dd>Faster loads, recovery after temporary failures, and less service and middleware traffic in a Clean Core B compliant architecture.</dd></div>
       </dl>
 
       <div class="study-figures">
@@ -87,11 +87,11 @@
     <div class="wrap">
       <p class="eyebrow">02 &middot; Agentic expense workflow</p>
       <h2 id="expense-monitor-title">Clear visibility into expense agent actions</h2>
-      <p class="study-intro">I built an SAP application that lets customers follow the expense agent&rsquo;s actions, check their status, and investigate errors. Agent configuration, execution logs, queues, and posting outcomes sit in one workspace.</p>
+      <p class="study-intro">An SAP workspace for the people responsible for an agentic expense workflow.</p>
       <dl class="study-facts">
         <div><dt>Problem</dt><dd>The agentic SaaS worked as intended, but the customer had no clear view of the agent&rsquo;s actions or their status in SAP.</dd></div>
-        <div><dt>My work</dt><dd>Built an SAP application combining agent configuration, execution logs, queue visibility, expense details, and FI/HCM posting status, with links to the underlying SAP records.</dd></div>
-        <div><dt>Result</dt><dd>Customers can follow the agent&rsquo;s actions, see their status, and investigate errors from one workspace.</dd></div>
+        <div><dt>My work</dt><dd>Built workflow configuration, execution logs, expense details, and queue and FI/HCM status views, with direct links to the related SAP records.</dd></div>
+        <div><dt>Result</dt><dd>Customers can see which actions are complete, which are still processing, and which need attention.</dd></div>
       </dl>
       <figure class="study-figure">
         <a class="study-screenshot" href="assets/case-studies/expense-agent-workflow.png?v=20261017-crop" target="_blank" rel="noopener" aria-label="Open the full agentic expense workflow application screenshot">
@@ -117,12 +117,12 @@
     <div class="wrap">
       <p class="eyebrow">03 &middot; Commercial application</p>
       <h2 id="supplier-workspace-title">A simpler, responsive supplier workspace</h2>
-      <p class="study-intro">I built a responsive supplier self-service app that simplifies order confirmations, delivery notices, and invoicing for end users. It was sold to multiple Italian customers in aviation, pharmaceuticals, and retail.</p>
+      <p class="study-intro">A supplier self-service app sold to multiple Italian customers in aviation, pharmaceuticals, and retail.</p>
       <p class="study-note">The screenshots show this app using sample data. Customer identities are confidential.</p>
       <dl class="study-facts">
         <div><dt>Problem</dt><dd>SAP transactions were too difficult for most end users. Customers needed a simpler, responsive interface for everyday tasks.</dd></div>
-        <div><dt>My work</dt><dd>Designed and built a responsive SAPUI5 application with simpler flows for purchase-order confirmations, delivery notices, and invoices.</dd></div>
-        <div><dt>Result</dt><dd>End users have a simpler interface for everyday supplier tasks that adapts to their screen. The application was sold to multiple Italian customers across aviation, pharmaceuticals, and retail.</dd></div>
+        <div><dt>My work</dt><dd>Designed and built the SAPUI5 interface for confirming purchase orders, submitting delivery notices, and invoicing.</dd></div>
+        <div><dt>Result</dt><dd>End users can handle routine supplier tasks in a simpler interface on desktop or mobile.</dd></div>
       </dl>
       <figure class="study-figure">
         <a class="study-screenshot" href="assets/case-studies/supplier-purchase-order.png" target="_blank" rel="noopener" aria-label="Open full-size supplier purchase order screenshot">
