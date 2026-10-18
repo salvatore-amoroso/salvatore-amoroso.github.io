@@ -43,6 +43,7 @@ ul, ol, dl, dd { margin: 0; }
 .pagehead h1 { margin-top: 12px; }
 .lead { margin-top: 17px; max-width: 62ch; color: var(--muted); font-size: 16px; line-height: 1.7; }
 .pagehead .text-link { margin-top: 4px; color: var(--muted); }
+.pagehead .hiring-contact { grid-column: 2; display: flex; flex-wrap: wrap; align-items: center; gap: 0 16px; font-size: 13px; }
 .study-links { display: flex; flex-wrap: wrap; gap: 0 20px; }
 .study-links a { display: inline-block; min-height: 44px; padding-block: 12px; font-size: 12px; color: var(--muted); text-decoration: underline; text-underline-offset: 5px; }
 .study-links a:hover { color: var(--accent); }
