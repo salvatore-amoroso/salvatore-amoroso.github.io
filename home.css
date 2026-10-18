@@ -6,7 +6,7 @@ html { scroll-padding-top: 104px; }
 .home .brand-dot { font-size: inherit; }
 .home .nav { gap: 28px; font-size: 13px; }
 .home .nav-contact { min-height: 44px; padding: 9px 18px; border: 1px solid var(--muted); }
-.home .nav-contact:hover { background: var(--ink); color: var(--bg); text-decoration: none; }
+.home .nav .nav-contact:hover { background: var(--ink); color: var(--bg); text-decoration: none; }
 .home .hero { display: block; position: relative; padding-block: 48px 52px; text-align: center; }
 .home .hero::before { content: ''; position: absolute; inset: 0 -48px; pointer-events: none; background: radial-gradient(ellipse at 50% 40%, #20332680, transparent 68%); z-index: -1; }
 .home .hero-top { display: flex; justify-content: center; align-items: center; gap: 12px 28px; }
