@@ -1,0 +1,98 @@
+/* One shared header and spacing system, with complete evidence in disclosures. */
+html { scroll-padding-top: 96px; }
+.home > .wrap { max-width: 1100px; padding-inline: 44px; }
+.home .top { flex-wrap: nowrap; gap: 24px; padding-block: 16px; }
+.home .brand { font-family: Arial, Helvetica, sans-serif; font-size: 15px; font-weight: 700; letter-spacing: -.3px; }
+.home .brand-dot { font-size: 24px; }
+.home .nav { width: auto; gap: 24px; font-size: 13px; justify-content: flex-end; }
+.home .nav a { display: inline-flex; align-items: center; min-height: 44px; padding-block: 10px; white-space: nowrap; }
+.home .track-profile { display: flex; margin-bottom: 20px; padding: 0; }
+.home .track-profile img { width: 48px; height: 48px; }
+.home .hero-top .eyebrow:not(.muted) { font-size: 12px; }
+.home .hero h1 { font-size: clamp(44px, 5.7vw, 64px); }
+.home .hero { padding-block: 18px 24px; }
+.home .proof { padding-block: 16px; }
+.home .proof strong { font-size: 36px; }
+.home .page-section { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 32px; padding-block: 28px; border-top: 1px solid var(--line); }
+.home .page-section:first-of-type { border-top: 0; }
+.section-heading h2 { margin-top: 14px; font: 400 30px/1.12 Georgia, 'Times New Roman', serif; letter-spacing: -1px; }
+.section-content { min-width: 0; }
+.section-intro { margin-bottom: 16px; max-width: 70ch; color: var(--muted); font-size: 13px; line-height: 1.7; }
+.project { border-top: 1px solid var(--line); }
+.project:last-child { border-bottom: 1px solid var(--line); }
+.project > summary { display: grid; grid-template-columns: 24px minmax(0, 1fr) 24px; align-items: center; gap: 14px; min-height: 80px; padding-block: 18px; }
+.project > summary h3 { font: 400 23px/1.25 Georgia, 'Times New Roman', serif; letter-spacing: -.4px; }
+.project-description { display: block; margin-top: 7px; color: var(--muted); font: 400 13px/1.6 Arial, Helvetica, sans-serif; letter-spacing: 0; }
+.expand-icon { color: var(--accent); font-size: 24px; text-align: right; }
+.expand-icon::after { content: '+'; }
+.project[open] > summary .expand-icon::after { content: '−'; }
+.project > summary:hover h3 { color: var(--accent); }
+.project-body { padding-block: 0 24px; padding-left: 38px; }
+.project-body .case-title { margin: 10px 0 14px; font-size: 18px; font-weight: 500; line-height: 1.4; }
+.project-body .case-out { gap: 14px; }
+.project-body .case-out strong { font-size: 21px; }
+.project-body .case { grid-template-columns: 1fr; }
+.project-body .study-facts { grid-template-columns: 1fr; gap: 14px; }
+.project-body .study-facts dd, .project-body .study-intro, .project-body .case-summary { font-size: 13px; }
+.project-body .study-figure { margin-top: 18px; }
+.project-body .study-figures .study-figure { margin-top: 0; }
+.project-body .study-figures { margin-top: 18px; }
+.subheading { font-family: Georgia, 'Times New Roman', serif; font-size: 23px; line-height: 1.3; font-weight: 400; }
+.section-content .vantage { margin-top: 16px; }
+.section-content .vp { grid-template-columns: 110px minmax(0, 1fr); gap: 6px 18px; }
+.section-content .vp h3 { font-size: 17px; }
+.section-content .vp .txt { font-size: 13px; }
+.experience { margin-top: 24px; }
+.experience .subheading { margin-block: 10px; }
+.section-content .ind { grid-template-columns: 150px minmax(0, 1fr); }
+.service-introduction { margin-bottom: 12px; }
+.cv-note { margin-top: 8px; font-size: 12px; }
+.home .contact h2 { font-size: 44px; }
+.home .contact { padding-block: 28px; }
+.home .contact-grid { margin-top: 16px; }
+.home .foot { font-size: 11px; }
+@media (max-width: 800px) {
+  .home > .wrap { padding-inline: 28px; }
+  .home .page-section { display: block; padding-block: 24px; }
+  .section-heading { margin-bottom: 18px; }
+  .section-heading h2 { margin-top: 10px; font-size: 28px; }
+  .section-heading h2 br { display: none; }
+  .section-content .vp { grid-template-columns: 125px minmax(0, 1fr); }
+}
+@media (max-width: 600px) {
+  html { scroll-padding-top: 84px; }
+  .home > .wrap { padding-inline: 22px; }
+  .home .top { padding-block: 10px; gap: 12px; }
+  .home .brand { font-size: 13px; }
+  .home .brand-dot { font-size: 20px; }
+  .home .nav { width: auto; font-size: 11px; gap: 12px; }
+  .home .hero h1 { font-size: clamp(36px, 10.5vw, 50px); }
+  .home .hero { padding-block: 16px 20px; }
+  .home .hero-top .eyebrow:not(.muted) { font-size: 10px; }
+  .home .proof { padding-block: 14px; }
+  .home .proof strong { font-size: 30px; }
+  .home .proof p { font-size: 10px; }
+  .project > summary { gap: 10px; grid-template-columns: 20px minmax(0, 1fr) 20px; padding-block: 16px; }
+  .project > summary h3 { font-size: 21px; }
+  .project-description { font-size: 12px; }
+  .project-body { padding-left: 0; padding-bottom: 18px; }
+  .project-body .case-out { grid-template-columns: 1fr; }
+  .project-body .case-out strong { font-size: 22px; }
+  .section-content .vp { grid-template-columns: 1fr; }
+  .section-content .vp .when { grid-row: auto; }
+  .section-content .ind { grid-template-columns: 1fr; gap: 7px; }
+  .home .contact h2 { font-size: 36px; }
+  .home .contact-grid { gap: 18px; }
+  .home .foot { font-size: 11px; }
+  .home .foot nav { gap: 0 14px; }
+}
+@media (max-width: 360px) {
+  html { scroll-padding-top: 110px; }
+  .home .top { flex-wrap: wrap; gap: 0; }
+  .home .nav { width: 100%; justify-content: space-between; }
+}
+@media print {
+  .home .top { position: static; }
+  .project-body, .service-details { display: block !important; }
+  .expand-icon { display: none; }
+}
