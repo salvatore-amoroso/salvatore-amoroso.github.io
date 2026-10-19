@@ -184,36 +184,8 @@
           </figure>
         </div>
       </details></div></details>
-<details class="project" id="open-source">
-      <summary><span class="number">05</span><h3 id="open-source-title">Open source. Better ABAP tooling.<span class="project-description">More reliable analysis and valid quick fixes in abaplint.<span class="project-proof">Two merged fixes · further checks under review and in draft</span><span class="project-stack">TypeScript · ABAP · static analysis · regression tests</span></span></h3><span class="expand-icon" aria-hidden="true"></span></summary>
-      <div class="project-body"><p class="eyebrow">05 / Open source contributions</p><h4 class="case-title">Making ABAP analysis more reliable</h4><p class="study-intro">Contributions to abaplint, an open source static-analysis tool for ABAP.</p>
-      <dl class="study-facts">
-        <div><dt>Problem</dt><dd>Incorrect READ-ONLY metadata could undermine write checks, and a SELECT SINGLE quick fix could generate invalid ABAP.</dd></div>
-        <div><dt>My work</dt><dd>Corrected modifier detection and structured-attribute handling, fixed quick-fix comment placement, and added regression tests. Further work checks direct writes and writes through aliases.</dd></div>
-        <div><dt>Result</dt><dd>Two fixes merged upstream. Direct-write checks are open for review; the alias-analysis rule is a draft.</dd></div>
-      </dl>
-      <details class="service study-detail">
-        <summary><span class="service-title">Merged fixes</span><span class="service-overview">READ-ONLY metadata and a SELECT SINGLE quick fix.</span></summary>
-        <div class="service-details">
-          <ul>
-            <li><a href="https://github.com/abaplint/abaplint/pull/4460" target="_blank" rel="noopener">READ-ONLY metadata &mdash; #4460, merged &nearr;</a>. Recognizes the modifier correctly, including structured class and interface attributes, without mistaking matching text in literals for a declaration.</li>
-            <li><a href="https://github.com/abaplint/abaplint/pull/4462" target="_blank" rel="noopener">SELECT SINGLE quick fix &mdash; #4462, merged &nearr;</a>. Places suppression comments after statement terminators while preserving pragmas, chained statements, and following code. Seven regression cases check and reparse the generated ABAP.</li>
-          </ul>
-        </div>
-      </details>
-      <details class="service study-detail">
-        <summary><span class="service-title">Further work</span><span class="service-overview">Direct-write checks under review; alias analysis in draft.</span></summary>
-        <div class="service-details">
-          <ul>
-            <li><a href="https://github.com/abaplint/abaplint/pull/4464" target="_blank" rel="noopener">Direct READ-ONLY writes &mdash; #4464, open &nearr;</a>. Rejects forbidden direct writes while preserving permitted owner and friend access and legal alias bindings.</li>
-            <li><a href="https://github.com/abaplint/abaplint/pull/4469" target="_blank" rel="noopener">Writes through aliases &mdash; #4469, draft &nearr;</a>. Follows protected storage through field symbols, references, branches, loops, and resolved procedure calls, while preserving writable value copies and owner-created references.</li>
-          </ul>
-          <p>The draft PR&rsquo;s published validation includes 411 focused READ-ONLY tests. Dynamic targets and uncertain paths remain approximate and may produce conservative warnings.</p>
-        </div>
-      </details>
-      <p class="study-note">PR statuses checked on 19 October 2026. Follow the links for the latest review and merge status.</p></div></details>
 <details class="project" id="fun-projects">
-      <summary><span class="number">06</span><h3 id="fun-projects-title">Planeproof<span class="project-description">A side project: choose where to watch a film.</span></h3><span class="expand-icon" aria-hidden="true"></span></summary>
+      <summary><span class="number">05</span><h3 id="fun-projects-title">Planeproof<span class="project-description">A side project: choose where to watch a film.</span></h3><span class="expand-icon" aria-hidden="true"></span></summary>
       <div class="project-body"><p class="eyebrow">Fun project</p><h4 class="case-title">Planeproof</h4><p class="study-intro">A side project that helps you choose where to watch a film: cinema, home, or a plane.</p>
       <p class="study-discover"><a href="https://planeproof.vercel.app/" target="_blank" rel="noopener">Try Planeproof &nearr;</a></p>
       <figure class="study-figure study-detail">
