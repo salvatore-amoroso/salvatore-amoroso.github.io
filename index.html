@@ -186,7 +186,7 @@
       </details></div></details>
 <details class="project" id="sap-off-stack">
       <summary><span class="number">05</span><h3 id="sap-off-stack-title">Rust and Node.js. Measured.<span class="project-description">Backend performance, access control, and maintainability.<span class="project-stack">Rust &middot; Node.js &middot; Docker &middot; Kubernetes &middot; CI</span></span></h3><span class="expand-icon" aria-hidden="true"></span></summary>
-      <div class="project-body"><p class="eyebrow">05 / Backend performance study</p><h4 class="case-title">Comparing backends with the same workload</h4><p class="study-intro">A reproducible comparison of Rust, Node.js, and ABAP, using a local SAP trial as the data source.</p>
+      <div class="project-body"><p class="eyebrow">05 / Backend performance study</p><h4 class="case-title">Comparing backends with the same workload</h4><p class="study-intro">A reproducible comparison of Rust, Node.js, and ABAP, using a local SAP container as the data source.</p>
       <dl class="study-facts">
         <div><dt>Problem</dt><dd>Compare backend runtimes and data-access paths while preserving validation and hashing, and make the access-control and maintenance tradeoffs explicit.</dd></div>
         <div><dt>My work</dt><dd>Designed the shared behavior contract and benchmark protocol, directed implementation, investigated driver failures, and validated the results. The setup includes Docker images, Kubernetes Jobs, shared correctness fixtures, and offline CI.</dd></div>
@@ -202,7 +202,7 @@
             <li><strong>Governance.</strong> Rust + CDS preserves SAP-side identity and service/entity authorization. This lab used privileged access and did not demonstrate business-user row filtering. Native HANA requires separate database grants and policy ownership.</li>
             <li><strong>Maintainability.</strong> API lifecycle, query ownership, certificates, and native driver compatibility remain engineering responsibilities. Both external CDS clients use the SAP ODBC driver. Long-term maintenance effort was not measured.</li>
           </ul>
-          <p id="sap-off-stack-paths">CDS uses internal Open SQL for ABAP and the SAP ABAP SQL service through ODBC for Rust and Node.js. SQL reused connections across scans; HTTP created a client per scan. Placement and resource allocations also differ. These complete-path measurements from one local trial do not establish a universal language ranking or production capacity.</p>
+          <p id="sap-off-stack-paths">CDS uses internal Open SQL for ABAP and the SAP ABAP SQL service through ODBC for Rust and Node.js. SQL reused connections across scans; HTTP created a client per scan. Placement and resource allocations also differ. These complete-path measurements from one local SAP container do not establish a universal language ranking or production capacity.</p>
         </div>
       </details>
       <p class="study-note">I owned the experiment design, debugging, and validation. AI agents implemented the code.</p>
