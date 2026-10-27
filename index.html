@@ -189,8 +189,8 @@
       <div class="project-body"><p class="eyebrow">05 / Backend performance study</p><h4 class="case-title">Comparing backends with the same workload</h4><p class="study-intro">A reproducible comparison of Rust, Node.js, and ABAP, using a local SAP container as the data source.</p>
       <dl class="study-facts">
         <div><dt>Problem</dt><dd>Compare backend runtimes and data-access paths while preserving validation and hashing, and make the access-control and maintenance tradeoffs explicit.</dd></div>
-        <div><dt>My work</dt><dd>Designed the shared behavior contract and benchmark protocol, directed implementation, investigated driver failures, and validated the results. The setup includes Docker images, Kubernetes Jobs, shared correctness fixtures, and offline CI.</dd></div>
-        <div><dt>Result</dt><dd>Nine implementations and 89,189 successful measured scans. The study shows how runtime gains depend on the access path, and what faster access changes in authorization and dependency ownership.</dd></div>
+        <div><dt>My work</dt><dd>Defined the validation and hashing contract and benchmark protocol, investigated a Node.js ODBC cursor cancellation issue, and directed the fix and recovery checks. The setup includes Docker images, Kubernetes Jobs, shared fixtures, and offline CI.</dd></div>
+        <div><dt>Result</dt><dd>Recorded Node.js-to-Rust latency reductions: 2.3% over HTTP and 47.4% through CDS. The study weighs these differences against access-control and maintenance obligations.</dd></div>
       </dl>
       <details class="service study-detail">
         <summary><span class="service-title">Experiment design and engineering tradeoffs</span><span class="service-overview">Correctness, container deployment, performance, and governance.</span></summary>
