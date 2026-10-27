@@ -25,7 +25,7 @@
 <link rel="stylesheet" href="home.css?v=20261018-unified">
 
 <meta name="twitter:image" content="https://salvatoreamoroso.com/assets/social-preview.png">
-<link rel="stylesheet" href="unified.css?v=20261027-sap-study">
+<link rel="stylesheet" href="unified.css?v=20261027-backend-study">
 </head>
 <body class="home">
 <a class="skip" href="#main">Skip to content</a>
@@ -185,29 +185,28 @@
         </div>
       </details></div></details>
 <details class="project" id="sap-off-stack">
-      <summary><span class="number">05</span><h3 id="sap-off-stack-title">SAP backend performance and governance<span class="project-description">Nine access paths. The same data, validation, and hashing.<span class="project-proof">89,189 measured scans &middot; latency and maintenance tradeoffs</span><span class="project-stack">ABAP &middot; Node.js &middot; Rust &middot; OData &middot; CDS &middot; HANA</span></span></h3><span class="expand-icon" aria-hidden="true"></span></summary>
-      <div class="project-body"><p class="eyebrow">05 / Performance study</p><h4 class="case-title">Choosing a faster SAP integration boundary</h4><p class="study-intro">What performance benefit does each data-access path deliver, and what governance and maintenance obligations accompany it?</p>
+      <summary><span class="number">05</span><h3 id="sap-off-stack-title">Rust and Node.js. Measured.<span class="project-description">Backend performance, access control, and maintainability.<span class="project-stack">Rust &middot; Node.js &middot; Docker &middot; Kubernetes &middot; CI</span></span></h3><span class="expand-icon" aria-hidden="true"></span></summary>
+      <div class="project-body"><p class="eyebrow">05 / Backend performance study</p><h4 class="case-title">Comparing backends with the same workload</h4><p class="study-intro">A reproducible comparison of Rust, Node.js, and ABAP, using a local SAP trial as the data source.</p>
       <dl class="study-facts">
-        <div><dt>Experiment</dt><dd>I designed a local SAP ABAP Trial experiment comparing ABAP, Node.js, and Rust through HTTP/OData, CDS, and native HANA. Every successful scan reads 5,000 order positions from 1,000 headers, validates nine fields and key order, normalizes exact decimals, and computes the same SHA-256 digest.</dd></div>
-        <div><dt>Recorded run</dt><dd>Three 180-second trials per path, after warmup. All 27 measured blocks completed: 89,189 successful scans and no observed scan failures.</dd></div>
+        <div><dt>Problem</dt><dd>Compare backend runtimes and data-access paths while preserving validation and hashing, and make the access-control and maintenance tradeoffs explicit.</dd></div>
+        <div><dt>My work</dt><dd>Designed the shared behavior contract and benchmark protocol, directed implementation, investigated driver failures, and validated the results. The setup includes Docker images, Kubernetes Jobs, shared correctness fixtures, and offline CI.</dd></div>
+        <div><dt>Result</dt><dd>Nine implementations and 89,189 successful measured scans. The study shows how runtime gains depend on the access path, and what faster access changes in authorization and dependency ownership.</dd></div>
       </dl>
-      <table class="benchmark-results" aria-describedby="sap-off-stack-paths">
-        <caption>Scan latency in milliseconds &mdash; median of three trial p50 values. Lower is better.</caption>
-        <thead><tr><th scope="col">Runtime</th><th scope="col">HTTP /<br>OData</th><th scope="col">CDS</th><th scope="col">Native<br>HANA</th></tr></thead>
-        <tbody>
-          <tr><th scope="row">ABAP</th><td>1,556</td><td>76</td><td>72</td></tr>
-          <tr><th scope="row">Node.js</th><td>1,427.28</td><td>55.1</td><td>41.16</td></tr>
-          <tr><th scope="row">Rust</th><td>1,395</td><td>29</td><td>16</td></tr>
-        </tbody>
-      </table>
-      <p class="benchmark-context" id="sap-off-stack-paths">CDS uses internal Open SQL for ABAP and the SAP ABAP SQL service through ODBC for Node.js and Rust.</p>
-      <dl class="study-facts">
-        <div><dt>Performance</dt><dd>The runtime gain depended on the path. Moving from Node.js to Rust reduced median scan latency by 2.3% over HTTP and 47.4% through CDS. Rust through native HANA saved another 13 ms compared with Rust through CDS.</dd></div>
-        <div><dt>Governance and maintainability</dt><dd>Rust + CDS preserves SAP-side identity and service/entity authorization. Applicable row controls depend on the access mode; this lab used privileged access and did not demonstrate business-user row filtering. Native HANA requires separate database grants and policy ownership. HTTP requires API lifecycle management; both external CDS clients require query, certificate, and SAP ODBC driver maintenance. Long-term maintenance effort was not measured.</dd></div>
-      </dl>
-      <p class="case-note">These are complete-path measurements from one local trial system. SQL reused connections across scans; HTTP created a client per scan. Placement and resource allocations also differ. The results describe this workload and setup; they do not establish a universal language ranking or production capacity.</p>
-      <p class="study-note">My contribution: experiment design, debugging, and validation. AI agents implemented the code.</p>
-      <p class="study-discover"><a href="https://github.com/salvatore-amoroso/SAP-Off-Stack-Case-Study" target="_blank" rel="noopener">Read the full case study, source, and benchmark evidence on GitHub &nearr;</a></p></div></details>
+      <details class="service study-detail">
+        <summary><span class="service-title">Experiment design and engineering tradeoffs</span><span class="service-overview">Correctness, container deployment, performance, and governance.</span></summary>
+        <div class="service-details">
+          <ul>
+            <li><strong>Equivalent work.</strong> Every successful scan reads 5,000 positions from 1,000 order headers, validates nine fields and key order, normalizes exact decimals, and computes the same SHA-256 digest.</li>
+            <li><strong>Reproducibility.</strong> External clients were timed sequentially in Docker with explicit resource limits. Kubernetes Jobs provide separate deployment checks; the recorded timings are from Docker runs.</li>
+            <li><strong>Performance.</strong> Across three trials per path, Rust through CDS recorded 29 ms versus Node.js at 55.1 ms; Rust through native HANA recorded 16 ms. These are medians of three trial p50 scan latencies.</li>
+            <li><strong>Governance.</strong> Rust + CDS preserves SAP-side identity and service/entity authorization. This lab used privileged access and did not demonstrate business-user row filtering. Native HANA requires separate database grants and policy ownership.</li>
+            <li><strong>Maintainability.</strong> API lifecycle, query ownership, certificates, and native driver compatibility remain engineering responsibilities. Both external CDS clients use the SAP ODBC driver. Long-term maintenance effort was not measured.</li>
+          </ul>
+          <p id="sap-off-stack-paths">CDS uses internal Open SQL for ABAP and the SAP ABAP SQL service through ODBC for Rust and Node.js. SQL reused connections across scans; HTTP created a client per scan. Placement and resource allocations also differ. These complete-path measurements from one local trial do not establish a universal language ranking or production capacity.</p>
+        </div>
+      </details>
+      <p class="study-note">I owned the experiment design, debugging, and validation. AI agents implemented the code.</p>
+      <p class="study-discover"><a href="https://github.com/salvatore-amoroso/SAP-Off-Stack-Case-Study" target="_blank" rel="noopener">Explore the case study, source, and benchmark evidence &nearr;</a></p></div></details>
 <details class="project" id="open-source">
       <summary><span class="number">06</span><h3 id="open-source-title">Open Source contributions: Off stack ABAP tooling<span class="project-description">abaplint &middot; Open source static analysis for ABAP.</span></h3><span class="expand-icon" aria-hidden="true"></span></summary>
       <div class="project-body"><p class="eyebrow">06 / Open Source contributions</p><h4 class="case-title">abaplint</h4><p class="study-intro">abaplint is an open source static-analysis tool for ABAP, written in TypeScript. It runs outside the SAP system to check syntax, types, and code quality, with configurable rules and support for automated checks in CI pipelines.</p>
