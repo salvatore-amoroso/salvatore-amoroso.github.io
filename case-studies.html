@@ -16,7 +16,7 @@
   <p class="actions"><a class="button" id="destination" href="index.html#work">Continue to the main page</a></p>
 </main>
 <script>
-  var knownHashes = ['#product', '#synchronization', '#expense-monitor', '#supplier-workspace', '#fun-projects', '#contact', '#main', '#product-title', '#synchronization-title', '#expense-monitor-title', '#supplier-workspace-title', '#fun-projects-title', '#contact-title'];
+  var knownHashes = ['#product', '#synchronization', '#expense-monitor', '#supplier-workspace', '#sap-off-stack', '#fun-projects', '#contact', '#main', '#product-title', '#synchronization-title', '#expense-monitor-title', '#supplier-workspace-title', '#sap-off-stack-title', '#fun-projects-title', '#contact-title'];
   var destination = 'index.html' + (knownHashes.indexOf(location.hash) !== -1 ? location.hash : '#work');
   document.getElementById('destination').href = destination;
   location.replace(destination);
